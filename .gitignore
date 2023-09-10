@@ -1,3 +1,4 @@
 .vscode/
-/Project1/cmake-build-debug/
+Project1/cmake-build-debug/
+Project1/.idea/sonarlint/
 
