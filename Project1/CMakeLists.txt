@@ -11,4 +11,6 @@ add_executable(Project1 src/main.cpp
         src/Storage/Record.cpp
         src/Storage/Record.h
         src/Storage/Block.h
-        src/Storage/Block.cpp)
+        src/Storage/Block.cpp
+        src/Storage/Parser.cpp
+        src/Storage/Parser.h)
