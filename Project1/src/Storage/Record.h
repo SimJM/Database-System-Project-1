@@ -12,6 +12,7 @@ public:
     Record(std::string date, long long team_id, int pts, double fg_pct, double ft_pct, double fg3_pct, int ast, int reb, bool home_team_wins);
 
     size_t getSize() const;
+    std::string toString() const;
 
     std::string GAME_DATE_EST;
     long long TEAM_ID_home;

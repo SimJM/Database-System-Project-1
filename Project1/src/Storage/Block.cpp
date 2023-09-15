@@ -2,11 +2,9 @@
 // Created by Jia Ming Sim on 14/9/23.
 //
 
-#include "Record.h" // Include the header file for the Record class
+#include "Record.h"
 #include "Block.h"
 
-
-// Constructor to initialize the block with a maximum capacity
 Block::Block(int id) : blockId(id) {
     blockId = id;
     maxCapacity = 400;
