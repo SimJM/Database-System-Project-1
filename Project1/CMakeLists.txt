@@ -24,3 +24,12 @@ add_executable(RecordTest tests/src/RecordTest.cpp
         src/Storage/Record.h)
 
 target_include_directories(RecordTest PRIVATE src)
+
+# Create a separate test executable
+add_executable(ParserTest tests/src/ParserTest.cpp
+        src/Storage/Record.cpp
+        src/Storage/Record.h
+        src/Storage/Parser.cpp
+        src/Storage/Parser.h)
+
+target_include_directories(ParserTest PRIVATE src)

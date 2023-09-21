@@ -3,14 +3,32 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
+  <component name="CMakeReloadState">
+    <option name="reloaded" value="true" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated>
+      <config projectName="Project1" targetName="RecordTest" />
+      <config projectName="Project1" targetName="ParserTest" />
+      <config projectName="Project1" targetName="Project1" />
+    </generated>
+  </component>
   <component name="CMakeSettings">
     <configurations>
       <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+      <configuration PROFILE_NAME="Debug-Coverage" ENABLED="true" CONFIG_NAME="Debug" GENERATION_OPTIONS="-DCMAKE_CXX_FLAGS=&quot;-fcoverage-mapping -fprofile-instr-generate&quot; -DCMAKE_C_FLAGS=&quot;-fcoverage-mapping -fprofile-instr-generate&quot;" />
     </configurations>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="864cc76d-9617-4272-b584-ff845899fdab" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/games.txt" beforeDir="false" afterPath="$PROJECT_DIR$/games.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project1/tests/src/ParserTest.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project1/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project1/tests/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/tests/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project1/tests/src/RecordTest.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/tests/src/RecordTest.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,11 +38,17 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug-Coverage" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2023" />
+    <option name="minorVersion" value="2.1" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
@@ -50,31 +74,77 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="CMake Application.Project1">
-    <configuration name="Record Size should be 80 bytes" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project1" TARGET_NAME="RecordTest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Project1" RUN_TARGET_NAME="RecordTest" TEST_METHOD="Record Size should be 80 bytes" TEST_MODE="SUITE_TEST">
+  <component name="RunManager" selected="Catch.Unit Test - Parser">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Integration Test - Parser and Record" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project1" TARGET_NAME="ParserTest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Project1" RUN_TARGET_NAME="ParserTest" TEST_METHOD="Integration Test - Parser and Record " TEST_MODE="SUITE_TEST">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
         <option name="BeforeTestRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Project1" type="CMakeRunConfiguration" factoryName="Application" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project1" TARGET_NAME="Project1" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Project1" RUN_TARGET_NAME="Project1">
+    <configuration name="ParserTest" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project1" TARGET_NAME="ParserTest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Project1" RUN_TARGET_NAME="ParserTest" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Unit Test - Parser" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project1" TARGET_NAME="ParserTest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Project1" RUN_TARGET_NAME="ParserTest" TEST_METHOD="Unit Test - Parser" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Unit Test - Record Size should be 80 bytes" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project1" TARGET_NAME="RecordTest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Project1" RUN_TARGET_NAME="RecordTest" TEST_METHOD="Unit Test - Record Size should be 80 bytes" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Unit Test - Record" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project1" TARGET_NAME="RecordTest" RUN_TARGET_PROJECT_NAME="Project1" RUN_TARGET_NAME="RecordTest" TEST_METHOD="Unit Test - Record" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Project1" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project1" TARGET_NAME="Project1" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Project1" RUN_TARGET_NAME="Project1">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
+    <configuration name="Python tests in tests" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="Database-System-Project-1" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Project1/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/Project1/tests&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Catch.Record Size should be 80 bytes" />
+      <item itemvalue="Catch.ParserTest" />
+      <item itemvalue="Catch.Unit Test - Parser" />
+      <item itemvalue="Catch.Unit Test - Record" />
+      <item itemvalue="Catch.Integration Test - Parser and Record" />
+      <item itemvalue="Catch.Unit Test - Record Size should be 80 bytes" />
       <item itemvalue="CMake Application.Project1" />
+      <item itemvalue="Python tests.Python tests in tests" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="CMake Application.Project1" />
-        <item itemvalue="Catch.Record Size should be 80 bytes" />
+        <item itemvalue="Catch.Unit Test - Parser" />
+        <item itemvalue="Catch.Unit Test - Record" />
+        <item itemvalue="Catch.Integration Test - Parser and Record" />
+        <item itemvalue="Catch.Unit Test - Record Size should be 80 bytes" />
+        <item itemvalue="Python tests.Python tests in tests" />
       </list>
     </recent_temporary>
   </component>
@@ -87,10 +157,22 @@
       <option name="presentableId" value="Default" />
       <updated>1694324256774</updated>
       <workItem from="1694324258301" duration="310000" />
+      <workItem from="1695316136401" duration="576000" />
+      <workItem from="1695316720085" duration="1212000" />
+      <workItem from="1695317942445" duration="1720000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VCPKGProject">
+    <isAutomaticEditVcpkgJson value="false" />
+    <isAutomaticCheckingOnLaunch value="false" />
+    <isAutomaticFoundErrors value="true" />
+    <isAutomaticFoundErrors value="true" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="../../../../Desktop/Code/SC3020/Database-System-Project-1/Project1/cmake-build-debug-coverage" NAME="Unit Test - Record Coverage Results" MODIFIED="1695319507167" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="gcov/llvm" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
