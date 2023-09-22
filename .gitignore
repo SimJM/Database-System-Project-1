@@ -1,4 +1,6 @@
 .vscode/
 Project1/cmake-build-debug/
+Project1/cmake-build-debug-coverage/
 Project1/.idea/sonarlint/
-
+Project1/.idea
+.idea/*
