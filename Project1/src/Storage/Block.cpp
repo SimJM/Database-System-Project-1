@@ -5,17 +5,35 @@
 #include "Record.h"
 #include "Block.h"
 
-Block::Block(int id) : blockId(id) {
-    blockId = id;
-    maxCapacity = 400;
+Block::Block(int BLOCK_SIZE) : curRecords(0){
     maxRecordCount = maxCapacity / sizeof(Record);
     records.reserve(maxRecordCount);
+ }
+
+const Record* Block::getRecordFromBlock(int recordPos) const {
+    if (recordPos >= 0 && recordPos < records.size()) {
+        return &records[recordPos];
+    }
+    return nullptr;
 }
 
-void Block::addRecord(const Record& record) {
+int Block::getCurNumRecords() const {
+    return records.size();
+}
+
+//Block::Block(int id) : blockId(id) {
+//    blockId = id;
+//    maxCapacity = 400;
+//    maxRecordCount = maxCapacity / sizeof(Record);
+//    records.reserve(maxRecordCount);
+//}
+
+int Block::addRecord(const Record& record) {
     if (!isFull()) {
         records.push_back(record);
+        return static_cast<int>(records.size()) - 1;
     }
+    return -1;
 }
 
 size_t Block::getSize() const {
@@ -33,8 +51,8 @@ size_t Block::getMaxCapacity() const {
 bool Block::isFull() const {
     return getSize() >= getMaxCapacity();
 }
-
-int Block::getId() const {
-    return blockId;
-}
+//
+//int Block::getId() const {
+//    return blockId;
+//}
 
