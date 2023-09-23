@@ -2,36 +2,35 @@
 // Created by Jia Ming Sim on 14/9/23.
 //
 
-#include "Record.h"
 #include "Block.h"
 
-Block::Block(int BLOCK_SIZE) : curRecords(0){
-    maxRecordCount = maxCapacity / sizeof(Record);
-    records.reserve(maxRecordCount);
+Block::Block() {
+    currentNumOfRecords = 0;
+    maxCapacity = 400;
+    maxNumOfRecords = maxCapacity / sizeof(Record);
+    records.reserve(maxNumOfRecords);
  }
 
-const Record* Block::getRecordFromBlock(int recordPos) const {
-    if (recordPos >= 0 && recordPos < records.size()) {
-        return &records[recordPos];
+Record Block::getRecord(int offset) const {
+    if (offset < 0 || offset >= records.size()) {
+        // throw error
     }
-    return nullptr;
+    return records[offset];
 }
 
-int Block::getCurNumRecords() const {
+int Block::getCurrentNumOfRecords() const {
     return records.size();
 }
 
-//Block::Block(int id) : blockId(id) {
-//    blockId = id;
-//    maxCapacity = 400;
-//    maxRecordCount = maxCapacity / sizeof(Record);
-//    records.reserve(maxRecordCount);
-//}
+int Block::getMaxNumOfRecords() const {
+    return maxNumOfRecords;
+};
 
-int Block::addRecordInBlock(const Record& record) {
+int Block::addRecord(const Record& record) {
     if (!isFull()) {
         records.push_back(record);
-        return static_cast<int>(records.size()) - 1;
+        int offset = records.size() - 1;
+        return offset;
     }
     return -1;
 }
@@ -51,11 +50,4 @@ size_t Block::getMaxCapacity() const {
 bool Block::isFull() const {
     return getSize() >= getMaxCapacity();
 }
-//
-//int Block::getId() const {
-//    return blockId;
-//}
 
-const Record*Block::getRecord(int offset) const {
-    return &records[offset];
-}

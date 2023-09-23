@@ -9,10 +9,19 @@ Record::Record(std::string date, long long team_id, int pts, double fg_pct, doub
         : GAME_DATE_EST(date), TEAM_ID_home(team_id), PTS_home(pts),
           FG_PCT_home(fg_pct), FT_PCT_home(ft_pct), FG3_PCT_home(fg3_pct),
           AST_home(ast), REB_home(reb), HOME_TEAM_WINS(home_team_wins) {
+    isDeleted = false;
 }
 
 size_t Record::getSize() const {
     return sizeof(*this);
+}
+
+bool Record::isRecordDeleted() const {
+    return isDeleted;
+}
+
+void Record::deleteRecord() {
+    isDeleted = true;
 }
 
 std::string Record::toString() const {

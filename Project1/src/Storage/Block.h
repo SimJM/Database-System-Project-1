@@ -10,29 +10,21 @@
 
 class Block {
 public:
-    Block(int BLOCK_SIZE);      // is BLOCK_SIZE defined in parser?
-    ~Block();       // destructor to free memory
+    Block();
 
-    int addRecordInBlock(const Record& record);   // adds the record to the block and returns the offset
+    Record getRecord(int offset) const;
+    int getCurrentNumOfRecords() const;
+    int getMaxNumOfRecords() const;
+    int addRecord(const Record& record);
     size_t getSize() const;
     size_t getMaxCapacity() const;
     bool isFull() const;
-    int getId() const;
-
-    const Record* getRecordFromBlock(int recordIndex) const;  // retrieves record from the block based on its offset
-    const Record* getRecord(int offset) const;
-    int getCurNumRecords() const;     // get current number of records stored in the block
-    static int getTotalRecords();
-    // haven't included deleting record part yet
 
 private:
-    int blockId;
-    int curRecords;             // no of records in the block currently
-//    static const int totalRecords;    // total no of records in one block
-    // will the value of totalRecords change during runtime?
+    int currentNumOfRecords;
+    int maxNumOfRecords;
     std::vector<Record> records;
-    size_t maxCapacity;          // Maximum block size in bytes
-    size_t maxRecordCount;       // Maximum number of records that can fit in the block
+    size_t maxCapacity; // Maximum block size in bytes
 };
 
 #endif //PROJECT1_BLOCK_H

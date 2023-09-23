@@ -10,23 +10,20 @@ class Storage {
 public:
     Storage();
 
+    int getFirstAvailableBlockId();
+    Address insertRecordIntoBlock(int blockPtr, const Record& rec);//kiv
     Address writeRecordToStorage(const Record& rec);
-
-    Address insertRecordIntoBlock(int blockPtr, const Record& rec);
-
-    int getNumOfRecords() const;
-
-    int getNumOfBlocksUsed() const;
-
+    int getCurrentNumOfRecords() const;
+    int getNumOfFullBlocks() const;
+    Block getBlock(int blockPtr) const;
     Record getRecord(const Address& add) const;
 
 private:
     std::vector<Block> blocks;
     std::unordered_set<int> availableBlocks;
     std::unordered_set<int> filledBlocks;
-    static const int diskCapacity = 500*1024*1024;
-    static const int blockSize = 400;
-    int numOfRecords;
+    const int diskCapacity = 500*1024*1024;
+    int currentNumOfRecords;
 };
 
 #endif //PROJECT1_STORAGE_H
