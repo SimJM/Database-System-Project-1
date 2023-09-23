@@ -13,13 +13,14 @@ public:
     Block(int BLOCK_SIZE);      // is BLOCK_SIZE defined in parser?
     ~Block();       // destructor to free memory
 
-    int addRecord(const Record& record);   // adds the record to the block and returns the offset
+    int addRecordInBlock(const Record& record);   // adds the record to the block and returns the offset
     size_t getSize() const;
     size_t getMaxCapacity() const;
     bool isFull() const;
     int getId() const;
 
     const Record* getRecordFromBlock(int recordIndex) const;  // retrieves record from the block based on its offset
+    const Record* getRecord(int offset) const;
     int getCurNumRecords() const;     // get current number of records stored in the block
     static int getTotalRecords();
     // haven't included deleting record part yet

@@ -28,7 +28,7 @@ int Block::getCurNumRecords() const {
 //    records.reserve(maxRecordCount);
 //}
 
-int Block::addRecord(const Record& record) {
+int Block::addRecordInBlock(const Record& record) {
     if (!isFull()) {
         records.push_back(record);
         return static_cast<int>(records.size()) - 1;
@@ -56,3 +56,6 @@ bool Block::isFull() const {
 //    return blockId;
 //}
 
+const Record*Block::getRecord(int offset) const {
+    return &records[offset];
+}
