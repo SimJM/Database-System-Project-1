@@ -10,19 +10,21 @@
 
 class Block {
 public:
-    Block(int id);
+    Block();
 
-    void addRecord(const Record& record);
+    Record getRecord(int offset) const;
+    int getCurrentNumOfRecords() const;
+    int getMaxNumOfRecords() const;
+    int addRecord(const Record& record);
     size_t getSize() const;
     size_t getMaxCapacity() const;
     bool isFull() const;
-    int getId() const;
 
 private:
-    int blockId;
+    int currentNumOfRecords;
+    int maxNumOfRecords;
     std::vector<Record> records;
-    size_t maxCapacity;          // Maximum block size in bytes
-    size_t maxRecordCount;       // Maximum number of records that can fit in the block
+    size_t maxCapacity; // Maximum block size in bytes
 };
 
 #endif //PROJECT1_BLOCK_H
