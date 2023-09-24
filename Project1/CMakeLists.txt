@@ -35,3 +35,25 @@ add_executable(ParserTest tests/src/ParserTest.cpp
         src/Storage/Parser.h)
 
 target_include_directories(ParserTest PRIVATE src)
+
+# Create a separate test executable
+add_executable(BlockTest tests/src/BlockTest.cpp
+        src/Storage/Record.cpp
+        src/Storage/Record.h
+        src/Storage/Block.h
+        src/Storage/Block.cpp)
+
+target_include_directories(BlockTest PRIVATE src)
+
+# Create a separate test executable
+add_executable(StorageTest tests/src/StorageTest.cpp
+        src/Storage/Record.cpp
+        src/Storage/Record.h
+        src/Storage/Block.h
+        src/Storage/Block.cpp
+        src/Storage/Storage.h
+        src/Storage/Storage.cpp
+        src/Storage/Address.cpp
+        src/Storage/Address.h)
+
+target_include_directories(StorageTest PRIVATE src)

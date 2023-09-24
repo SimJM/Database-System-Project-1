@@ -20,8 +20,8 @@ public:
 
 private:
     std::vector<Block> blocks;
-    std::unordered_set<int> availableBlocks;
-    std::unordered_set<int> filledBlocks;
+    std::vector<int> availableBlocks;
+    std::vector<int> filledBlocks;
     const int diskCapacity = 500*1024*1024;
     int currentNumOfRecords;
 };

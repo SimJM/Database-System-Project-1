@@ -10,7 +10,7 @@ Storage::Storage() {
 
     for (int i = 0; i < numOfBlocks; i++) {
         blocks[i] = Block();
-        availableBlocks.insert(i);
+        availableBlocks.push_back(i);
     }
 }
 
@@ -27,10 +27,10 @@ Address Storage::insertRecordIntoBlock(int blockPtr, const Record& rec) {
     }
 
     int offset = blocks[blockPtr].addRecord(rec);
-    filledBlocks.insert(blockPtr);
 
     if (blocks[blockPtr].isFull()) {
-        availableBlocks.erase(blockPtr);
+        availableBlocks.erase(availableBlocks.begin());
+        filledBlocks.push_back(blockPtr);
     }
 
     return Address(blockPtr, offset);
