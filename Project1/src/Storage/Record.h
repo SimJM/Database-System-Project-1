@@ -26,6 +26,21 @@ public:
     int REB_home; //4 Bytes
     bool HOME_TEAM_WINS; // 1 Byte
     bool isDeleted; // 1 Byte
+
+
+    bool operator==(const Record& other) const {
+        return (
+                GAME_DATE_EST == other.GAME_DATE_EST &&
+                TEAM_ID_home == other.TEAM_ID_home &&
+                PTS_home == other.PTS_home &&
+                FG_PCT_home == other.FG_PCT_home &&
+                FT_PCT_home == other.FT_PCT_home &&
+                FG3_PCT_home == other.FG3_PCT_home &&
+                AST_home == other.AST_home &&
+                REB_home == other.REB_home &&
+                HOME_TEAM_WINS == other.HOME_TEAM_WINS
+        );
+    }
 };
 
 #endif //PROJECT1_RECORD_H

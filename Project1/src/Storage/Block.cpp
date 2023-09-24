@@ -26,6 +26,7 @@ int Block::getMaxNumOfRecords() const {
     return maxNumOfRecords;
 };
 
+// addRecord adds the record into the block and returns its offset
 int Block::addRecord(const Record& record) {
     if (!isFull()) {
         records.push_back(record);
