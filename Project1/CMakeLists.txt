@@ -57,3 +57,10 @@ add_executable(StorageTest tests/src/StorageTest.cpp
         src/Storage/Address.h)
 
 target_include_directories(StorageTest PRIVATE src)
+
+# Create a separate test executable
+add_executable(BPlusTreeTest tests/src/BPlusTreeTest.cpp
+        src/Indexing/BPlusTree.cpp
+)
+
+target_include_directories(BPlusTreeTest PRIVATE src)

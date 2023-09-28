@@ -2,6 +2,7 @@
 #include "Storage/Record.h"
 #include "Storage/Parser.h"
 #include "Storage/Storage.h"
+#include "Indexing/BPlusTree.cpp"
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
@@ -17,5 +18,6 @@ int main() {
     }
     int noOfFullBlocks = storage.getNumOfFullBlocks();
     std::cout << "Done writing record to Storage: " + std::to_string(noOfFullBlocks) << std::endl;
+
     return 0;
 }

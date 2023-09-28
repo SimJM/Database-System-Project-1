@@ -1,329 +1,336 @@
-#include<iostream>
-#include<string>
-#include<climits>
-#include<sstream>
-#include<fstream>
-#include<vector>
-using namespace std;
+#include <iostream>
+#include <queue>
 
-struct key_struct{
+const int nodeSize = 3; // Define the node size (parameter) here
 
-    float val;    // value of the key
-    vector <void*> new_pointer;};   //pointer vector
-
-class Tree;
-int nodeSize; //Need to define this
-
-class Node{
-    int size;  //to keep track
-    Node** ptr;
-    bool is_leaf;
-    friend class Tree;
-
-public:
-    Node(){
-        key= new key_struct[nodeSize];
-        ptr= new Node*[nodeSize+1];
-        is_leaf=true;
-
-        //To allocate memory whenever it is called. Again NodeSize needs to be defined
-    }
-
-    key_struct *key;
+struct Key {
+    float val;     // Value of the key
+    void* address; // Address corresponding to the value
 };
 
-class Tree
-{
+class Node {
 public:
-    Node *root;
-    void insert_main(key_struct k, Node* cur, Node* child)
-    {
-        if (cur->size<nodeSize){  //see if need new node or not. Checks the current size of the cur.
+    bool is_leaf;
+    int size;
+    Key keys[nodeSize+1];
+    Node* children[nodeSize+2];
 
-            int i=0;
-            while(k.val>cur->key[i].val && i<cur->size) //Where to add the key in the node
-                i++;
-            int j= cur->size;
-            for (j; j>i; j--){
-
-                cur->key[j]=cur->key[j-1];  // Shifting key values larger than k.val to right
-            }
-            j = cur->size+1;
-            for(j ; j > i+1; j--)
-            {
-                cur->ptr[j] = cur->ptr[j-1]; //Shift pointers.
-            }
-
-            cur->key[i]= k;                 //after finding the right position within the node (i) assign the value.
-            cur->size++;                    //Increment the size
-            cur->ptr[i+1] = child;          // Assign the child pointer it'd point at, again according to the position determined
+    Node() {
+        is_leaf = true;
+        size = 0;
+        for (int i = 0; i <= nodeSize; i++) {
+            children[i] = nullptr;
         }
-        else{
+    }
+};
 
-            //Need New Node
-            //So making another nodes with sets of keys.
-            Node* n= new Node;
-            key_struct img_key[nodeSize+1];
-            Node* img_ptr[nodeSize+2];   // this is more like how a node would look if it could hole more than 1 allowed.
-            //Purpose is just to get the order/position right and then split them.
-            Node* new_ptr[nodeSize+2];
-            for (int i=0; i<nodeSize; i++)         //copying all the values
-                img_key[i]=cur->key[i];
-            for (int i=0; i<nodeSize+1; i++)       //copying all the pointers
-                img_ptr[i]=cur->ptr[i];
+class BPlusTree {
+public:
+    int indexNodeAccessCount = 0;
+    int dataBlockAccessCount = 0;
+    Node* root;
 
-            int i=0, j=nodeSize+1;              //making space for key by comparing. Basically the same step we did in the if statement
+    BPlusTree() {
+        root = nullptr;
+    }
 
-            while(k.val>img_key[i].val && i<nodeSize+1) //using nodeSize+1 because it is an imaginary node, and is 1 more than the usual size.
+    void insert(float val, void* address) {
+        if (root == nullptr) {
+            root = new Node();
+            root->keys[0].val = val;
+            root->keys[0].address = address;
+            root->size = 1;
+        } else {
+            insertRecursive(root, val, address);
+        }
+    }
+
+    void insertRecursive(Node* current, float val, void* address) {
+        if (current->is_leaf) {
+            // Inserting the value at the right place
+            int i = current->size - 1;
+            while (i >= 0 && val < current->keys[i].val) {
+                current->keys[i + 1] = current->keys[i];
+                i--;
+            }
+
+            current->keys[i + 1].val = val;
+            current->keys[i + 1].address = address;
+            current->size++;
+            // Split the leaf node if necessary
+            if (current->size > nodeSize) {
+                splitLeaf(current);
+            }
+        }
+        else {
+            // Find the appropriate child node to insert the key using recursion
+            int i = 0;
+            while (i < current->size && val > current->keys[i].val) {
                 i++;
-            for (j=nodeSize+2; j>i; j--)                // similarly using +2 here.
-                img_key[j]=img_key[j-1];
-            img_key[i]=k;
-
-            //making space for pointers
-
-            for(j=nodeSize+2;j>i+1;j--)
-                img_ptr[j]=img_ptr[j-1];
-            img_ptr[i+1]= child;
-
-            n->is_leaf= false;
-
-            //Now we split this big node into two nodes.
-
-            cur->size = (nodeSize+1)/2;
-            n->size= nodeSize-(nodeSize+1)/2;
-
-            //again copy values and pointers to the new node after splitting
-            i = 0;
-            j = cur->size+1;
-            for( i,j; i< n->size; i++, j++)
-            {
-                n->key[i] = img_key[j];    // Assigning keys to the new node (n) from the imaginary node we created
             }
-            i=0;
-            j=cur->size;
-            for(i, j; i < n->size+1; i++, j++)
-            {
-                n->ptr[i] = img_ptr[j];    // Assigning pointers to the new node (n) from the imaginary node we created
+            insertRecursive(current->children[i], val, address);
+        }
+    }
+
+    // Function to split a leaf node
+    void splitLeaf(Node* leaf) {
+        Node* newLeaf = new Node();
+        newLeaf->is_leaf = true;
+        int splitIndex = (nodeSize + 1) / 2;
+
+        // Copying 2nd half of the original leaf to new leaf
+        for (int i = splitIndex; i < leaf->size; i++) {
+            newLeaf->keys[i - splitIndex] = leaf->keys[i];
+        }
+
+        newLeaf->size = leaf->size - splitIndex;
+        leaf->size = splitIndex;
+
+        // updating the rightmost pointer to keep in correct sequence
+        newLeaf->children[nodeSize] = leaf->children[nodeSize];
+        leaf->children[nodeSize] = newLeaf;
+
+        insertIntoParent(leaf, newLeaf->keys[0].val, newLeaf);
+    }
+
+    // Function to insert a new child node into a parent node
+    void insertIntoParent(Node* leftChild, float val, Node* rightChild) {
+        if (root == leftChild) {
+            // if the left child was the root itself, we need a new root
+            Node* newRoot = new Node();
+            newRoot->keys[0].val = val;
+            newRoot->children[0] = leftChild;
+            newRoot->children[1] = rightChild;
+            newRoot->size = 1;
+            root = newRoot;
+            root->is_leaf = false;
+        }
+        else {
+            // Find the parent node and insert val and rightChild into it
+            Node* parent = findParent(root, leftChild);
+            int i = 0;
+            while (i < parent->size && val > parent->keys[i].val) {
+                i++;
             }
 
-            //Recursion breaking case is when the cur is pointing to the root.
-            if (cur==root)
-            {
-                Node* nr = new Node;
-                nr->key[0] = cur->key[cur->size];
-                nr->ptr[0] = cur;
-                nr->ptr[1] = n;
-                nr->is_leaf = false;
-                nr->size = 1;
-                root = nr;
+            // Shift keys and children to make space for the new entry
+            for (int j = parent->size; j > i; j--) {
+                parent->keys[j] = parent->keys[j - 1];
+                parent->children[j + 1] = parent->children[j];
             }
 
-            else{
+            parent->keys[i].val = val;
+            parent->children[i + 1] = rightChild;
+            parent->size++;
 
-
-                //recursive case
-                //finding until parent, that is the root is found
-                insert_main(cur->key[cur->size],findParent(root,cur) ,n); // the child is the new node (n), the new cur is the parent.
+            // Split the parent if necessary
+            if (parent->size > nodeSize) {
+                splitParent(parent);
             }
         }
     }
 
+    // Function to split a parent node
+    void splitParent(Node* parent) {
+        Node* newParent = new Node();
+        int splitIndex = (nodeSize + 1) / 2;
 
-
-    Node* findParent(Node* cur, Node* child)
-    {
-
-        // use this function to find the parents
-
-        Node* parent;
-        if(cur->is_leaf)  // if it is leaf it cannot be a parent. Extra Note: cur here is the root passed out in the insert_main function
-        {
-            return NULL;
+        // Copying the 2nd half of keys and children to the new parent
+        newParent->size = parent->size - splitIndex - 1;
+        for (int i = splitIndex + 1, j = 0; i < parent->size; i++, j++) {
+            newParent->keys[j] = parent->keys[i];
         }
-        int i=0;
-        for( i; i < cur->size+1; i++)
-        {
-            if(cur->ptr[i] == child)  //parent found
-            {
-                parent = cur;
-                return parent;
-            }
-            else                       // recursive
-            {
-                parent = findParent(cur->ptr[i],child);
-                if(parent!=NULL)
-                    return parent;
-            }
+
+        for (int i = splitIndex + 1, j = 0; i <= parent->size; i++, j++) {
+            newParent->children[j] = parent->children[i];
         }
-        return parent;
+        // Update the sizes of the original parent and the new parent
+        parent->size = splitIndex;
+        newParent->is_leaf = false;
+
+        // Insert the new parent into its parent node (recursively)
+        insertIntoParent(parent, parent->keys[splitIndex].val, newParent);
     }
-    Node *traversal(float k) {
-        //search logic
-        if (root == nullptr){
-            //empty
+
+    // Function to find the parent node of a given child node
+    Node* findParent(Node* current, Node* child) {
+        if (current->is_leaf) {
+            return nullptr;
         }
-        else{
-            Node *cursor = root;
-            //in the following while loop, cursor will travel to the leaf node possibly consisting the key
-            while (cursor->is_leaf == false) {
-                for (int i = 0; i < cursor->size; i++) {
-                    if (k < cursor->key[i].val) { // if x<key move to the left child pointer then break
-                        cursor = cursor->ptr[i];
-                        break;
-                    }
-                    if (i == cursor->size - 1) { // checking if we are at the last key in current node if we are move to rightmost node line
-                        cursor = cursor->ptr[i + 1];
-                        break;
-                    }
-                }
+        if (current == child) {
+            return child;
+        }
+        for (int i = 0; i <= current->size; i++) {
+            if (current->children[i] == child) {
+                return current;
             }
-            //in the following for loop, we search for the key if it exists
-            //after this cursor is pointing to leaf node of where key is
-            //in the leaf node, we search for the key
-            for (int i = 0; i < cursor->size; i++) {
-                if (cursor->key[i].val == k) { //if key is found
-                    //cout<<"Found\n";
-                }
-                return cursor;
+            else if (i == current->size || child->keys[0].val < current->keys[i].val) {
+                return findParent(current->children[i], child);
             }
         }
-        //cout<<"Not found\n";
+        std::cout << "Error in findParent()" <<std::endl;
         return nullptr;
     }
 
+    // Function to get the root node's key value
+    void getRootValue() {
+        if (root == nullptr) {
+            std::cerr << "Tree is empty." << std::endl;
+            return;
+        }
 
-
-    void insert(key_struct k)
-    {
-        //if tree is empty we start at this point.
-        if(root==NULL)
-        {
-            root = new Node;
-            root->key[0] = k;
-            root->is_leaf = true;
-            root->size = 1;} //set size to 1, as its the first one created.
-
-            // if root exists, we move on to else
-        else
-        {
-            Node* cur = root;
-            Node* parent;
-
-            Node* traversed_node;
-            traversed_node = traversal(k.val);                     //design a traversal function giving me the pointer to the node where we need to insert
-            if ( traversed_node != nullptr){  // if the result is not a NULL pointer
-                for(int i = 0; i < traversed_node->size; i++)
-                {
-                    if(traversed_node->key[i].val == k.val)
-                    {
-                        traversed_node->key[i].new_pointer.push_back(k.new_pointer[0]);  // if the node searched has the same key value we are looking to insert
-                        break;
-                    }
-                }
-                return;
-            }
-
-            while(cur->is_leaf == false)           // while we have not reached the leaf node
-            {
-                parent = cur;                       //copying the current cur value
-                for(int i = 0; i < cur->size; i++)
-                {
-                    if(k.val < cur->key[i].val)    // if the insert value is less than we use the cur pointer just before it for the next for loop.
-                    {
-                        cur = cur->ptr[i];
-                        break;
-                    }
-                    if(i == cur->size - 1)          // if we reach the end of the node, we just use the last pointer to move to the next for loop
-                    {
-                        cur = cur->ptr[i+1];
-                        break;
-                    }
-                }
-            }
-            // after the while loop terminates we have reached the leaf node, where we need to insert.
-
-
-            if(cur->size < nodeSize)  // Check whether the leaf node found is within max size.
-            {
-                int i = 0;
-                while(k.val > cur->key[i].val && i < cur->size) i++;              //same step to make space by shifting after finding the correct position
-                int j = cur->size;
-                for(j;j > i; j--)
-                {
-                    cur->key[j] = cur->key[j-1];
-                }
-                cur->key[i] = k;       //Assign
-                cur->size++;           //increment
-                cur->ptr[cur->size] = cur->ptr[cur->size-1]; //shifting
-                cur->ptr[cur->size-1] = NULL;
-            }
-            else
-            {
-
-                // Node full, create another leaf node
-
-                Node* new_leaf = new Node;
-
-                // Basically the same process of splitting
-
-                key_struct img_node[nodeSize+1];  //imaginary node
-                int i = 0;
-                for(i; i < nodeSize; i++)
-                {
-                    img_node[i] = cur->key[i];
-                }
-                i=0; int j=nodeSize+1;
-                while(k.val > img_node[i].val && i < nodeSize) i++;
-                for(j;j > i; j--)
-                {
-                    img_node[j] = img_node[j-1];
-                }
-                img_node[i] = k;
-                new_leaf->is_leaf = true;  //This is a leaf node
-
-                //split it into tw
-
-                cur->size = (nodeSize+1)/2;
-                new_leaf->size = nodeSize+1-(nodeSize+1)/2;
-
-
-                cur->ptr[cur->size] = new_leaf;  // assigning cur to the new leaf
-
-                new_leaf->ptr[new_leaf->size] = cur->ptr[nodeSize]; //assigning pointer of the new leaf node to the next leaf node.
-
-                cur->ptr[nodeSize] = NULL;
-
-                //Assigning keys to the new node by imaginary big node we created
-
-
-                for(i = 0; i < cur->size; i++)
-                {
-                    cur->key[i] = img_node[i];
-                }
-                i = 0, j = cur->size;
-                for(i,j; i < new_leaf->size; i++, j++)
-                {
-                    new_leaf->key[i] = img_node[j];
-                }
-
-                ///Once done we just modify the parents by recursion
-
-                //special case to break the recursion, create a new root.
-                if(cur == root)
-                {
-                    Node* nr = new Node;
-                    nr->key[0] = new_leaf->key[0];
-                    nr->ptr[0] = cur;
-                    nr->ptr[1] = new_leaf;
-                    nr->is_leaf = false;
-                    nr->size = 1;
-                    root = nr;
-                }
-                else
-                {
-                    insert_main(new_leaf->key[0],parent,new_leaf);      // if it is not the root, we basically the other insertion method to insert the key.
-                }
+        std::cout << "Root keys: [";
+        for (int i = 0; i < root->size; i++) {
+            std::cout << root->keys[i].val;
+            // Add a space or comma if it's not the last value
+            if (i < root->size - 1) {
+                std::cout << ", ";
             }
         }
-    }};
+        std::cout << "]" << std::endl;
+    }
+
+    // Function to get the number of levels in the tree
+    int getNumberOfLevels() {
+        return countLevels(root);
+    }
+
+    // Function to count the levels of the tree
+    int countLevels(Node* node) {
+        if (node == nullptr) {
+            return 0;
+        }
+
+        if (node->is_leaf) {
+            return 1;
+        }
+
+        int maxChildLevels = 0;
+        for (int i = 0; i <= node->size; i++) {
+            int childLevels = countLevels(node->children[i]);
+            if (childLevels > maxChildLevels) {
+                maxChildLevels = childLevels;
+            }
+        }
+
+        return 1 + maxChildLevels;
+    }
+
+    // Function to get the number of nodes in the tree
+    int getNumberOfNodes() {
+        return countNodes(root);
+    }
+
+    // Function to count the nodes in the tree (used by getNumberOfNodes)
+    int countNodes(Node* node) {
+        if (node == nullptr) {
+            return 0;
+        }
+
+        int count = 1; // Count the current node
+
+        if (node->is_leaf== false) {
+            for (int i = 0; i <= node->size; i++) {
+                count += countNodes(node->children[i]); // Recursively count child nodes
+            }
+        }
+
+        return count;
+    }
+
+    int countLeafNodes(Node* node) {
+        if (node == nullptr) {
+            return 0;
+        }
+
+        if (node->is_leaf) {
+            return 1;
+        }
+
+        int count = 0;
+        for (int i = 0; i <= node->size; i++) {
+            count += countLeafNodes(node->children[i]);
+        }
+        return count;
+    }
+
+    void printTree() {
+        if (root == nullptr) {
+            std::cout << "Tree is empty." << std::endl;
+            return;
+        }
+
+        std::queue<Node*> q; //store pointers to nodes
+        q.push(root); //push root into queue to begin traversal from root
+
+        while (!q.empty()) {
+            int nodeCount = (int) q.size();
+            while (nodeCount > 0) {
+                Node* node = q.front();
+                q.pop();
+
+                // Print keys of the current node
+                std::cout << "[ ";
+                for (int i = 0; i < node->size; i++) {
+                    std::cout << node->keys[i].val << " ";
+                }
+                std::cout << "] ";
+
+                // If it's not a leaf node, enqueue its children
+                if (!node->is_leaf) {
+                    for (int i = 0; i <= node->size; i++) {
+                        q.push(node->children[i]);
+                    }
+                }
+
+                nodeCount--;
+            }
+            std::cout << std::endl; // Newline after each level
+        }
+    }
+    bool search(float val) {
+        resetCounters();
+        return searchRecursive(root, val);
+    }
+
+    // Reset the counters
+    void resetCounters() {
+        indexNodeAccessCount = 0;
+        dataBlockAccessCount = 0;
+    }
+
+    // Recursive search function
+    bool searchRecursive(Node* current, float val) {
+        if (current == nullptr) {
+            return false;
+        }
+
+        if (current->is_leaf) {
+            dataBlockAccessCount++;
+            for (int i = 0; i < current->size; i++) {
+                if (current->keys[i].val == val) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        else {
+            indexNodeAccessCount++;
+            int i = 0;
+            while (i < current->size && val > current->keys[i].val) {
+                i++;
+            }
+            return searchRecursive(current->children[i], val);
+        }
+    }
+
+    // Getter functions to retrieve the count of index nodes and data blocks accessed
+    int getIndexNodeAccessCount() const {
+        return indexNodeAccessCount;
+    }
+
+    int getDataBlockAccessCount() const {
+        return dataBlockAccessCount;
+    }
+
+};
