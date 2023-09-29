@@ -17,6 +17,7 @@ public:
     int getNumOfFullBlocks() const;
     Block getBlock(int blockPtr) const;
     Record getRecord(const Address& add) const;
+    int getDataBlockAccessCount();
 
 private:
     std::vector<Block> blocks;

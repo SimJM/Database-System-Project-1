@@ -1,7 +1,7 @@
 #include <iostream>
 #include <queue>
 
-const int nodeSize = 3; // Define the node size (parameter) here
+const int nodeSize = 22; // Define the node size (parameter) here
 
 struct Key {
     float val;     // Value of the key
@@ -27,7 +27,6 @@ public:
 class BPlusTree {
 public:
     int indexNodeAccessCount = 0;
-    int dataBlockAccessCount = 0;
     Node* root;
 
     BPlusTree() {
@@ -179,7 +178,7 @@ public:
             return;
         }
 
-        std::cout << "Root keys: [";
+        std::cout << "Content of root - keys: [";
         for (int i = 0; i < root->size; i++) {
             std::cout << root->keys[i].val;
             // Add a space or comma if it's not the last value
@@ -296,7 +295,6 @@ public:
     // Reset the counters
     void resetCounters() {
         indexNodeAccessCount = 0;
-        dataBlockAccessCount = 0;
     }
 
     // Recursive search function
@@ -306,7 +304,8 @@ public:
         }
 
         if (current->is_leaf) {
-            dataBlockAccessCount++;
+            // Todo: traverse the whole b+ tree
+            indexNodeAccessCount++;
             for (int i = 0; i < current->size; i++) {
                 if (current->keys[i].val == val) {
                     return true;
@@ -327,10 +326,6 @@ public:
     // Getter functions to retrieve the count of index nodes and data blocks accessed
     int getIndexNodeAccessCount() const {
         return indexNodeAccessCount;
-    }
-
-    int getDataBlockAccessCount() const {
-        return dataBlockAccessCount;
     }
 
 };

@@ -65,3 +65,8 @@ Record Storage::getRecord(const Address& add) const {
     Block block = getBlock(blockId);
     return block.getRecord(offset);
 }
+
+// Todo: take in a list of address and generate this count.
+int getDataBlockAccessCount()  {
+    return 1;
+}

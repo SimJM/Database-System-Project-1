@@ -14,6 +14,7 @@ public:
     size_t getSize() const;
     bool isRecordDeleted() const;
     void deleteRecord();
+    double getFgPctHome() const;
     std::string toString() const;
 
     std::string GAME_DATE_EST; // 24 Bytes
