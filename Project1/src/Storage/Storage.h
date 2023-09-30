@@ -18,6 +18,10 @@ public:
     Block getBlock(int blockPtr) const;
     Record getRecord(const Address& add) const;
     int getDataBlockAccessCount();
+    int getNumOfBlocksSearchQuery(double FG_PCT_home) const;
+    int runBruteForceSearchQuery(double FG_PCT_home) const;
+    int getNumOfBlocksRangeQuery(double FG_PCT_home_lower, double FG_PCT_home_higher) const;
+    int runBruteForceRangeQuery(double FG_PCT_home_lower_val, double FG_PCT_home_upper_val) const;
 
 private:
     std::vector<Block> blocks;

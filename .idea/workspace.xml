@@ -15,6 +15,7 @@
       <config projectName="Project1" targetName="StorageTest" />
       <config projectName="Project1" targetName="BlockTest" />
       <config projectName="Project1" targetName="ParserTest" />
+      <config projectName="Project1" targetName="BPlusTreeTest" />
       <config projectName="Project1" targetName="Project1" />
     </generated>
   </component>
@@ -27,11 +28,6 @@
   <component name="ChangeListManager">
     <list default="true" id="864cc76d-9617-4272-b584-ff845899fdab" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project1/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Block.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Block.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Record.h" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Record.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Storage.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Storage.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Storage.h" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Storage.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,6 +94,17 @@
   }
 }</component>
   <component name="RunManager" selected="CMake Application.Project1">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BPlusTreeTest" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project1" TARGET_NAME="BPlusTreeTest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Project1" RUN_TARGET_NAME="BPlusTreeTest" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="BlockTest" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project1" TARGET_NAME="BlockTest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Project1" RUN_TARGET_NAME="BlockTest" TEST_MODE="SUITE_TEST">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -151,13 +158,9 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <list>
       <item itemvalue="Catch.BlockTest" />
+      <item itemvalue="Catch.BPlusTreeTest" />
       <item itemvalue="Catch.ParserTest" />
       <item itemvalue="Catch.StorageTest" />
       <item itemvalue="Catch.Unit Test - Storage" />
@@ -200,6 +203,17 @@
     <isAutomaticCheckingOnLaunch value="false" />
     <isAutomaticFoundErrors value="true" />
     <isAutomaticFoundErrors value="true" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
