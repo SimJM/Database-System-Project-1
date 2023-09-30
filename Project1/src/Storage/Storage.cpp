@@ -73,8 +73,35 @@ Record Storage::getRecord(const Address& add) const {
 }
 
 // Todo: take in a list of address and generate this count.
-int getDataBlockAccessCount()  {
-    return 1;
+int Storage::getDataBlockAccessCount(vector<Address*> addresses) const {
+    unordered_set<int> blockAccessed;
+    int len = addresses.size();
+    for (int i = 0; i < len; i++) {
+        int blockId = addresses[i]->getBlockID();
+        blockAccessed.insert(blockId);
+    };
+    int numOfBlockAccessed = blockAccessed.size();
+    return numOfBlockAccessed;
+}
+
+double Storage::getAverageOfFg3PctHome(vector<Address*> addresses) const {
+    auto startTime = high_resolution_clock::now();
+    std::sort(addresses.begin(), addresses.end());
+    double total;
+    int len = addresses.size();
+
+    for (int i = 0; i < len; i++) {
+        Record r = getRecord(*addresses[i]);
+        double fg3PctHome = r.getFgPctHome();
+        total = total + fg3PctHome;
+    }
+
+    auto endTime = high_resolution_clock::now();
+    auto duration = duration_cast<milliseconds>(endTime - startTime);
+    cout << "Total duration for getAverageOfFg3PctHome: " << duration.count() << " milliseconds" << endl;
+
+    double average = total/len;
+    return average;
 }
 
 int Storage::getNumOfBlocksSearchQuery(double FG_PCT_home) const {

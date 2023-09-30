@@ -16,6 +16,10 @@ int Address::getOffset() const{
     return offset;
 }
 
+bool operator<(const Address& a1, const Address& a2) {
+    return a1.getBlockID() < a2.getBlockID();
+}
+
 string Address::toString() const {
     return "The record is located at block " + to_string(blockID) + " with offset " + to_string(offset);
 }

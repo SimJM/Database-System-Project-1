@@ -6,27 +6,31 @@
 #include "Record.h"
 #include "Address.h"
 
+using namespace std;
+
 class Storage {
 public:
     Storage();
 
-    int getFirstAvailableBlockId();
     Address insertRecordIntoBlock(int blockPtr, const Record& rec);//kiv
     Address writeRecordToStorage(const Record& rec);
+
+    int getFirstAvailableBlockId();
     int getCurrentNumOfRecords() const;
     int getNumOfFullBlocks() const;
     Block getBlock(int blockPtr) const;
     Record getRecord(const Address& add) const;
-    int getDataBlockAccessCount();
+    int getDataBlockAccessCount(vector<Address*> addresses) const;
+    double getAverageOfFg3PctHome(vector<Address*> addresses) const;
     int getNumOfBlocksSearchQuery(double FG_PCT_home) const;
     int runBruteForceSearchQuery(double FG_PCT_home) const;
     int getNumOfBlocksRangeQuery(double FG_PCT_home_lower, double FG_PCT_home_higher) const;
     int runBruteForceRangeQuery(double FG_PCT_home_lower_val, double FG_PCT_home_upper_val) const;
 
 private:
-    std::vector<Block> blocks;
-    std::vector<int> availableBlocks;
-    std::vector<int> filledBlocks;
+    vector<Block> blocks;
+    vector<int> availableBlocks;
+    vector<int> filledBlocks;
     const int diskCapacity = 500*1024*1024;
     int currentNumOfRecords;
 };
