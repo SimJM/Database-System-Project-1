@@ -22,9 +22,7 @@ public:
     Record getRecord(const Address& add) const;
     int getDataBlockAccessCount(vector<Address*> addresses) const;
     double getAverageOfFg3PctHome(vector<Address*> addresses) const;
-    int getNumOfBlocksSearchQuery(double FG_PCT_home) const;
     int runBruteForceSearchQuery(double FG_PCT_home) const;
-    int getNumOfBlocksRangeQuery(double FG_PCT_home_lower, double FG_PCT_home_higher) const;
     int runBruteForceRangeQuery(double FG_PCT_home_lower_val, double FG_PCT_home_upper_val) const;
 
 private:

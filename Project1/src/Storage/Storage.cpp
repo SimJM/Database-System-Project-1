@@ -104,22 +104,11 @@ double Storage::getAverageOfFg3PctHome(vector<Address*> addresses) const {
     return average;
 }
 
-int Storage::getNumOfBlocksSearchQuery(double FG_PCT_home) const {
-    return runBruteForceSearchQuery(FG_PCT_home);
-}
-
 // pass in the value FG_PCT_home=0.5
 int Storage::runBruteForceSearchQuery(double FG_PCT_home) const {
     double FG_PCT_home_value;
     int countDataBlockAccess = 0;
     vector<Record> resultOfSearchQuery;     // store all records where FG_PCT_home=0.5
-
-    // iterate through all the filled blocks
-    // count countDataBlockAccess
-    // for each filled block, want to get the block and get current size of the block (cur num of records stored in the block)
-
-    // loop through these records, for these records check FG_PCT_home value
-    // if they match, push the record into resultOfSearchQuery vector
 
     // Measure the start time
     auto startTime = high_resolution_clock::now();
@@ -157,22 +146,11 @@ int Storage::runBruteForceSearchQuery(double FG_PCT_home) const {
     return countDataBlockAccess;
 }
 
-int Storage::getNumOfBlocksRangeQuery(double FG_PCT_home_lower, double FG_PCT_home_higher) const {
-    return runBruteForceRangeQuery(FG_PCT_home_lower, FG_PCT_home_higher);
-}
-
 // pass in the range for FG_PCT_home=0.6 to FG_PCT_home=1
 int Storage::runBruteForceRangeQuery(double FG_PCT_home_lower_val, double FG_PCT_home_upper_val) const {
     double FG_PCT_home_value;
     int countDataBlockAccess = 0;
     vector<Record> resultOfSearchQuery;     // store all records where FG_PCT_home=0.5
-
-    // iterate through all the filled blocks
-    // count countDataBlockAccess
-    // for each filled block, want to get the block and get current size of the block (cur num of records stored in the block)
-
-    // loop through these records, for these records check FG_PCT_home value
-    // if they fit in the range, push the record into resultOfSearchQuery vector
 
     auto startTiming = high_resolution_clock::now();
 
