@@ -32,10 +32,11 @@ int main() {
     // Experiment 2
     std::cout << "Experiment 2" << std::endl;
     BPlusTree bPlusTree;
-    for(const Address addr : addresses) {
-        Record rec = storage.getRecord(addr);
+    int noOfAddresses = addresses.size();
+    for (int i = 0; i < noOfAddresses; i++) {
+        Record rec = storage.getRecord(addresses[i]);
         double fgPctHome = rec.getFgPctHome();
-        Address* addrPointer = const_cast<Address *>(&addr);
+        Address* addrPointer = const_cast<Address *>(&addresses[i]);
         bPlusTree.insert(fgPctHome, addrPointer );
     }
     std::cout << "n value: " + std::to_string(22) << std::endl;
@@ -46,22 +47,24 @@ int main() {
 
     // Experiment 3
     std::cout << "Experiment 3" << std::endl;
-//Todo: indexing              std::cout << "Number of index nodes the process accesses: " + std::to_string(bPlusTree.getIndexNodeAccessCount()) << std::endl;
-//Todo: storage               std::cout << "Number of data blocks the process accesses: " + std::to_string(bPlusTree.getDataBlockAccessCount()) << std::endl;
-//Todo: storage               std::cout << "Average of “FG3_PCT_home” of the records that are returned: " + std::to_string(bPlusTree.getIndexNodeAccessCount()) << std::endl;
-//Todo: storage + indexing    std::cout << "Running time of the retrieval process: " + std::to_string(bPlusTree.getIndexNodeAccessCount()) << std::endl;
-//Todo: storage    std::cout << "Number of data blocks that would be accessed by a brute-force linear scan method: " + std::to_string(bPlusTree.getIndexNodeAccessCount()) << std::endl;
-//Todo: storage    std::cout << "Running time for brute-force: " + std::to_string(bPlusTree.getIndexNodeAccessCount()) << std::endl;
+    std::cout << "Number of index nodes the process accesses: " + std::to_string(bPlusTree.getNumOfIndexNodeAccessed(0.5,0.5)) << std::endl;
+    int rangeindexNodesAccessed = 0;
+    std::vector<Address*> listOfAddresses = bPlusTree.retrieveRange(0.5, 0.5, rangeindexNodesAccessed);
+    std::cout << "Number of data blocks the process accesses: " + std::to_string(storage.getDataBlockAccessCount(listOfAddresses)) << std::endl;
+    std::cout << "Average of “FG3_PCT_home” of the records that are returned: " + std::to_string(storage.getAverageOfFg3PctHome(listOfAddresses)) << std::endl;
+//Todo: clarify if its storage + indexing    std::cout << "Running time of the retrieval process: " + std::to_string(bPlusTree.getIndexNodeAccessCount()) << std::endl;
+    std::cout << "Number of data blocks that would be accessed by a brute-force linear scan method: " + std::to_string(storage.runBruteForceSearchQuery(0.5)) << std::endl;
     std::cout << "" << std::endl;
 
 // Experiment 4
     std::cout << "Experiment 4" << std::endl;
-//Todo: indexing              std::cout << "Number of index nodes the process accesses: " + std::to_string(bPlusTree.getIndexNodeAccessCount()) << std::endl;
-//Todo: storage               std::cout << "Number of data blocks the process accesses: " + std::to_string(bPlusTree.getDataBlockAccessCount()) << std::endl;
-//Todo: storage               std::cout << "Average of “FG3_PCT_home” of the records that are returned: " + std::to_string(bPlusTree.getIndexNodeAccessCount()) << std::endl;
-//Todo: storage + indexing    std::cout << "Running time of the retrieval process: " + std::to_string(bPlusTree.getIndexNodeAccessCount()) << std::endl;
-//Todo: storage    std::cout << "Number of data blocks that would be accessed by a brute-force linear scan method: " + std::to_string(bPlusTree.getIndexNodeAccessCount()) << std::endl;
-//Todo: storage    std::cout << "Running time for brute-force: " + std::to_string(bPlusTree.getIndexNodeAccessCount()) << std::endl;
+    std::cout << "Number of index nodes the process accesses: " + std::to_string(bPlusTree.getNumOfIndexNodeAccessed(0.6,1.0)) << std::endl;
+    std::vector<Address*> listOfAddresses1 = bPlusTree.retrieveRange(0.6, 1.0, rangeindexNodesAccessed);
+    std::cout << "Number of data blocks the process accesses: " + std::to_string(storage.getDataBlockAccessCount(listOfAddresses1)) << std::endl;
+    std::cout << "Average of “FG3_PCT_home” of the records that are returned: " + std::to_string(storage.getAverageOfFg3PctHome(listOfAddresses1)) << std::endl;
+//Todo: clarify if its storage + indexing    std::cout << "Running time of the retrieval process: " + std::to_string(bPlusTree.getIndexNodeAccessCount()) << std::endl;
+    std::cout << "Number of data blocks that would be accessed by a brute-force linear scan method: " + std::to_string(storage.runBruteForceRangeQuery(0.6, 1.0)) << std::endl;
+    std::cout << "" << std::endl;
 
     return 0;
 }

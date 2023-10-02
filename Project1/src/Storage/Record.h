@@ -15,6 +15,7 @@ public:
     bool isRecordDeleted() const;
     void deleteRecord();
     double getFgPctHome() const;
+    double getFg3PctHome() const;
     std::string toString() const;
 
     std::string GAME_DATE_EST; // 24 Bytes

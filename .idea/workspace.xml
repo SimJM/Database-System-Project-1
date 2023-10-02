@@ -28,6 +28,11 @@
   <component name="ChangeListManager">
     <list default="true" id="864cc76d-9617-4272-b584-ff845899fdab" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project1/src/Indexing/BPlusTree.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Indexing/BPlusTree.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Record.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Record.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Record.h" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Record.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Storage.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Storage.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project1/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,11 +99,6 @@
   }
 }</component>
   <component name="RunManager" selected="CMake Application.Project1">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="BPlusTreeTest" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project1" TARGET_NAME="BPlusTreeTest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Project1" RUN_TARGET_NAME="BPlusTreeTest" TEST_MODE="SUITE_TEST">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -192,6 +192,8 @@
       <workItem from="1695316136401" duration="576000" />
       <workItem from="1695316720085" duration="1212000" />
       <workItem from="1695317942445" duration="1720000" />
+      <workItem from="1696256428948" duration="1196000" />
+      <workItem from="1696257639430" duration="9227000" />
     </task>
     <servers />
   </component>
@@ -218,11 +220,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Project1/src/Storage/Storage.cpp</url>
-          <line>3</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/Project1/tests/src/StorageTest.cpp</url>
           <line>7</line>
