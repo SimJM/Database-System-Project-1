@@ -1,4 +1,10 @@
 #include "Storage.h"
+#include <vector>
+#include <iostream>
+#include <chrono>
+
+using namespace std;
+using namespace std::chrono;
 
 Storage::Storage() {
     currentNumOfRecords = 0;
@@ -52,7 +58,7 @@ int Storage::getNumOfFullBlocks() const {
 }
 
 Block Storage::getBlock(int blockPtr) const {
-    if (blockPtr < 0) {
+    if (blockPtr == -1) {
         // throw error
     }
     Block block = blocks[blockPtr];
@@ -67,6 +73,115 @@ Record Storage::getRecord(const Address& add) const {
 }
 
 // Todo: take in a list of address and generate this count.
-int getDataBlockAccessCount()  {
-    return 1;
+int Storage::getDataBlockAccessCount(vector<Address*> addresses) const {
+    unordered_set<int> blockAccessed;
+    int len = addresses.size();
+    for (int i = 0; i < len; i++) {
+        int blockId = addresses[i]->getBlockID();
+        blockAccessed.insert(blockId);
+    };
+    int numOfBlockAccessed = blockAccessed.size();
+    return numOfBlockAccessed;
+}
+
+double Storage::getAverageOfFg3PctHome(vector<Address*> addresses) const {
+    auto startTime = high_resolution_clock::now();
+    std::sort(addresses.begin(), addresses.end());
+    double total;
+    int len = addresses.size();
+
+    for (int i = 0; i < len; i++) {
+        Record r = getRecord(*addresses[i]);
+        double fg3PctHome = r.getFgPctHome();
+        total = total + fg3PctHome;
+    }
+
+    auto endTime = high_resolution_clock::now();
+    auto duration = duration_cast<milliseconds>(endTime - startTime);
+    cout << "Total duration for getAverageOfFg3PctHome: " << duration.count() << " milliseconds" << endl;
+
+    double average = total/len;
+    return average;
+}
+
+// pass in the value FG_PCT_home=0.5
+int Storage::runBruteForceSearchQuery(double FG_PCT_home) const {
+    double FG_PCT_home_value;
+    int countDataBlockAccess = 0;
+    vector<Record> resultOfSearchQuery;     // store all records where FG_PCT_home=0.5
+
+    // Measure the start time
+    auto startTime = high_resolution_clock::now();
+
+    for(int blockPtr : filledBlocks){
+        countDataBlockAccess++;
+        Block block = getBlock(blockPtr);
+        int curNumOfRecordsInBlock = block.getCurrentNumOfRecords();
+
+        for (int i=0; i<curNumOfRecordsInBlock; i++){
+            Record rec = block.getRecord(i);
+            FG_PCT_home_value = rec.getFgPctHome();
+            if(FG_PCT_home_value == FG_PCT_home){
+                resultOfSearchQuery.push_back(rec);
+            }
+        }
+    }
+
+    // Measure the end time
+    auto endTime = high_resolution_clock::now();
+
+    // Running time of the brute-force linear scan method
+    auto duration = duration_cast<milliseconds>(endTime - startTime);
+
+    cout << "Running time of the brute-force linear scan method for Search Query: " << duration.count() << " milliseconds" << endl;
+
+    if(resultOfSearchQuery.empty()){
+        cout << "Movies with the FG_PCT_home equal to 0.5 not found in database" << endl;
+    }
+
+    for (const Record& rec : resultOfSearchQuery){
+        cout << "Found records where FG_PCT_home equal to 0.5 (brute force scan): [" << rec.toString() << "]" << endl;
+    }
+
+    return countDataBlockAccess;
+}
+
+// pass in the range for FG_PCT_home=0.6 to FG_PCT_home=1
+int Storage::runBruteForceRangeQuery(double FG_PCT_home_lower_val, double FG_PCT_home_upper_val) const {
+    double FG_PCT_home_value;
+    int countDataBlockAccess = 0;
+    vector<Record> resultOfSearchQuery;     // store all records where FG_PCT_home=0.5
+
+    auto startTiming = high_resolution_clock::now();
+
+    for(int blockPtr : filledBlocks){
+        countDataBlockAccess++;
+        Block block = getBlock(blockPtr);
+
+        int curNumOfRecordsInBlock = block.getCurrentNumOfRecords();
+        for (int i=0; i<curNumOfRecordsInBlock; i++){
+            Record rec = block.getRecord(i);
+            FG_PCT_home_value = rec.getFgPctHome();
+            if(FG_PCT_home_value >= FG_PCT_home_lower_val && FG_PCT_home_value <= FG_PCT_home_upper_val){
+                resultOfSearchQuery.push_back(rec);
+            }
+        }
+    }
+
+    auto endTiming = high_resolution_clock::now();
+
+    // Running time of the brute-force linear scan method
+    auto durationTime = duration_cast<milliseconds>(endTiming - startTiming);
+
+    cout << "Running time of the brute-force linear scan method for Range Query: " << durationTime.count() << " milliseconds" << endl;
+
+    if(resultOfSearchQuery.empty()){
+        cout << "Movies with the FG_PCT_home equal to 0.5 not found in database" << endl;
+    }
+
+    for (const Record& rec : resultOfSearchQuery){
+        cout << "Found records where FG_PCT_home equal to 0.5 (brute force scan): [" << rec.toString() << "]" << endl;
+    }
+
+    return countDataBlockAccess;
 }
