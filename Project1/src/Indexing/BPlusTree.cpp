@@ -1,8 +1,9 @@
 #include <iostream>
 #include <queue>
 #include <vector>
+#include "Storage/Address.h"
 
-const int nodeSize = 3; // Define the node size (parameter) here
+const int nodeSize = 22; // Define the node size (parameter) here
 
 struct Key {
     float val;     // Value of the key
@@ -335,9 +336,15 @@ public:
         return indexNodeAccessCount;
     }
 
-    std::vector<void*> retrieveRange(float start, float end, int &rangeindexNodesAccessed) {
+    int getNumOfIndexNodeAccessed(float start, float end) {
+        int rangeindexNodesAccessed = 0;
+        retrieveRange(start, end, rangeindexNodesAccessed);
+        return rangeindexNodesAccessed;
+    }
+
+    std::vector<Address*> retrieveRange(float start, float end, int &rangeindexNodesAccessed) {
         rangeindexNodesAccessed = 0;
-        std::vector<void*> recordAddresses;
+        std::vector<Address*> recordAddresses;
 
         Node* current = root;
 
@@ -355,7 +362,8 @@ public:
             bool shouldIncrement = false;
             for (int i = 0; i < current->size; i++) {
                 if (current->keys[i].val >= start && current->keys[i].val <= end) {
-                    recordAddresses.push_back(current->keys[i].address);
+                    Address* addressPtr = static_cast<Address*> (current->keys[i].address);
+                    recordAddresses.push_back(addressPtr);
                     shouldIncrement = true;
                 }
                 else if (current->keys[i].val > end) {

@@ -28,6 +28,10 @@ double Record::getFgPctHome() const {
     return FG_PCT_home;
 }
 
+double Record::getFg3PctHome() const {
+    return FG3_PCT_home;
+}
+
 std::string Record::toString() const {
     std::string result;
     result += std::string("GAME_DATE_EST: ") + GAME_DATE_EST + "\n";
