@@ -1,7 +1,8 @@
 #include <iostream>
 #include <queue>
+#include <vector>
 
-const int nodeSize = 22; // Define the node size (parameter) here
+const int nodeSize = 3; // Define the node size (parameter) here
 
 struct Key {
     float val;     // Value of the key
@@ -20,7 +21,10 @@ public:
         size = 0;
         for (int i = 0; i <= nodeSize; i++) {
             children[i] = nullptr;
+            keys[i].val = 0;
+            keys[i].address = nullptr;
         }
+        children[nodeSize+1] = nullptr;
     }
 };
 
@@ -153,11 +157,15 @@ public:
 
     // Function to find the parent node of a given child node
     Node* findParent(Node* current, Node* child) {
+        if (current == nullptr) {
+            return nullptr;
+        }
         if (current->is_leaf) {
             return nullptr;
         }
         if (current == child) {
-            return child;
+            std::cout << "error" << std::endl;
+            return nullptr;//changed from child to nullptr //new
         }
         for (int i = 0; i <= current->size; i++) {
             if (current->children[i] == child) {
@@ -302,7 +310,6 @@ public:
         if (current == nullptr) {
             return false;
         }
-
         if (current->is_leaf) {
             // Todo: traverse the whole b+ tree
             indexNodeAccessCount++;
@@ -323,9 +330,47 @@ public:
         }
     }
 
-    // Getter functions to retrieve the count of index nodes and data blocks accessed
+
     int getIndexNodeAccessCount() const {
         return indexNodeAccessCount;
     }
 
+    std::vector<void*> retrieveRange(float start, float end, int &rangeindexNodesAccessed) {
+        rangeindexNodesAccessed = 0;
+        std::vector<void*> recordAddresses;
+
+        Node* current = root;
+
+        // Go to the leaf node that should contain the start of the range
+        while (!current->is_leaf) {
+            rangeindexNodesAccessed++; // accessed an index node
+            int i = 0;
+            while (i < current->size && start > current->keys[i].val) {
+                i++;
+            }
+            current = current->children[i];
+        }
+        // Current is now at the 1st leaf node
+        while (current != nullptr) {
+            bool shouldIncrement = false;
+            for (int i = 0; i < current->size; i++) {
+                if (current->keys[i].val >= start && current->keys[i].val <= end) {
+                    recordAddresses.push_back(current->keys[i].address);
+                    shouldIncrement = true;
+                }
+                else if (current->keys[i].val > end) {
+                    if (shouldIncrement) {
+                        rangeindexNodesAccessed++;
+                    }
+                    return recordAddresses;
+                }
+            }
+            if (shouldIncrement) {
+                rangeindexNodesAccessed++;
+            }
+            current = current->children[nodeSize];
+        }
+
+        return recordAddresses;
+    }
 };
