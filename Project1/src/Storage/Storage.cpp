@@ -156,3 +156,29 @@ int Storage::runBruteForceRangeQuery(double FG_PCT_home_lower_val, double FG_PCT
 
     return countDataBlockAccess;
 }
+
+void Storage::deleteRecord(vector<Address>& addList) {
+    for (const Address& add : addList) {
+        int blockId = add.getBlockID();
+        int offset = add.getOffset();
+        Block block = getBlock(blockId);
+        block.deleteRecordFromBlock(offset);
+
+        if (containsFilledBlock(blockId)) {
+            removeFilledBlock(blockId);
+            addAvailableBlock(blockId);
+        }
+    }
+}
+
+bool Storage::containsFilledBlock(int blockId) const {
+    return find(filledBlocks.begin(), filledBlocks.end(), blockId) != filledBlocks.end();
+}
+
+void Storage::removeFilledBlock(int blockId) {
+    filledBlocks.erase(remove(filledBlocks.begin(), filledBlocks.end(), blockId), filledBlocks.end());
+}
+
+void Storage::addAvailableBlock(int blockId) {
+    availableBlocks.push_back(blockId);
+}

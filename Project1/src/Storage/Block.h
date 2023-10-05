@@ -19,6 +19,7 @@ public:
     size_t getSize() const;
     size_t getMaxCapacity() const;
     bool isFull() const;
+    void deleteRecordFromBlock(int offset);
 
 private:
     int currentNumOfRecords;

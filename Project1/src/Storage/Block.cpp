@@ -52,3 +52,13 @@ bool Block::isFull() const {
     return getSize() >= getMaxCapacity();
 }
 
+void Block::deleteRecordFromBlock(int offset) {
+    if (offset < 0 || offset >= records.size()) {
+        // throw error
+        return;
+    }
+
+    // to delete the record
+    records.erase(records.begin() + offset);
+    currentNumOfRecords--;
+}
