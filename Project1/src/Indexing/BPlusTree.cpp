@@ -311,7 +311,6 @@ public:
             return false;
         }
         if (current->is_leaf) {
-            // Todo: traverse the whole b+ tree
             indexNodeAccessCount++;
             for (int i = 0; i < current->size; i++) {
                 if (current->keys[i].val == val) {
@@ -373,4 +372,308 @@ public:
 
         return recordAddresses;
     }
+    void remove(float val) {
+        if (root == nullptr){
+            return;
+        }
+
+        while (removeRecursive(root, val)) { //keeping doing until removeRecursive is false
+            // If the root node has 0 keys left, make its only child the new root
+            if (root->size == 0 && !root->is_leaf) {
+                Node* oldRoot = root;
+                root = root->children[0];
+                delete oldRoot;
+            }
+        }
+    }
+
+    bool removeRecursive(Node* current, float val) {
+        int i = 0;
+        while (i < current->size && val > current->keys[i].val) { //correct cos in leaf node key 0 has pointer[0] to its val
+            i++; //find index to go to
+        }
+
+        if (current->is_leaf) {
+            // If key is found in the leaf, remove it
+            if (i < current->size && current->keys[i].val == val) {
+                for (i; i < current->size - 1; i++) {
+                    current->keys[i] = current->keys[i + 1];
+                }
+                current->size--;
+                // Check for underflow in the leaf node
+                if (current->size < (nodeSize+1) / 2 -0) { // SIZING change from -1 to 0
+                    handleLeafUnderflow(current);
+                }
+                return true; //key removed
+            }
+            return false;//no more keys to remove or no key
+        }
+        else { // update internal node key ####I THINK ERROR IS HERE
+            if (i < current->size && current->keys[i].val == val) {//change from i to i-1// if key is found in the c1
+                // If the key is found in an internal node
+                Node* successorNode = current->children[i+1]; //change from i+1 to i?c2
+                while (!successorNode->is_leaf) {
+                    successorNode = successorNode->children[0];// change from 0 to 1??c3
+                }
+                float successorVal = successorNode->keys[0].val;
+                if (removeRecursive(current->children[i+1], successorVal)) { // i feel like the error is here
+                    current->keys[i].val = successorNode->keys[0].val; //trying random things here //line feels correct
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+
+            if (removeRecursive(current->children[i], val)) {
+                // Check for underflow in the internal node
+                if (current->children[i]->size < (nodeSize+1) / 2 - 1) {
+                    handleNonLeafUnderflow(current, i);
+                }
+                if (i < current->size && current->keys[i].val == val) { // This key in the internal node needs update
+                    current->keys[i].val = current->children[i+1]->keys[0].val;
+                }
+                return true;
+            }
+            return false;
+        }
+    }
+
+
+    void handleLeafUnderflow(Node* leaf) {
+        Node* leftSibling = nullptr;
+        Node* rightSibling = nullptr;
+        Node* parent = findParent(root, leaf);
+
+        int indexInParent = -1;
+        for (int i = 0; i < parent->size && indexInParent == -1; i++) {
+            if (parent->children[i+1] == leaf) {
+                indexInParent = i;
+                leftSibling = parent->children[i];
+
+                if (i+2 <= parent->size) {
+                    rightSibling = parent->children[i+2];
+                } else {
+                    rightSibling = nullptr;
+                }
+            }
+        }
+        //edited one below original seems to work better but idk
+        /*for (int i = 0; i <= parent->size && indexInParent == -1; i++) {
+            if (parent->children[i] == leaf) {
+                indexInParent = i;
+
+                // Handling left sibling
+                if (i-1 >= 0) {
+                    leftSibling = parent->children[i-1];
+                }
+                else {
+                    leftSibling = nullptr;
+                }
+                // Handling right sibling
+                if (i+1 <= parent->size) {
+                    rightSibling = parent->children[i+1];
+                }
+                else {
+                    rightSibling = nullptr;
+                }
+            }
+        }*/
+
+        // Borrow from the left sibling
+        if (leftSibling && leftSibling->size > (nodeSize+1) / 2 + 0) { //SIZING change from -1 to +1 to 0
+            // Shift all keys in the leaf node to the right
+            for (int i = leaf->size; i > 0; i--) {
+                leaf->keys[i] = leaf->keys[i - 1];
+            }
+
+            //leaf->keys[0] = parent->keys[indexInParent];
+            //parent->keys[indexInParent] = leftSibling->keys[leftSibling->size - 1];
+
+            //Replaced top with bottom
+            leaf->keys[0] = leftSibling->keys[leftSibling->size - 1]; // Borrow the largest key from left sibling
+            parent->keys[indexInParent] = leaf->keys[0];// Update the parent's key that points to the leaf node
+
+            leaf->size++;
+            leftSibling->size--;
+        }
+            // Borrow from the right sibling
+        else if (rightSibling && rightSibling->size > (nodeSize+1) / 2 + 1) { //SIZING change from -1 to +1 to 0
+            //leaf->keys[leaf->size] = parent->keys[indexInParent+1];
+            //parent->keys[indexInParent+1] = rightSibling->keys[0];
+            //replace top with bottom
+            leaf->keys[leaf->size] = rightSibling->keys[0];
+            parent->keys[indexInParent+1] = rightSibling->keys[0];
+            // Shift all keys in the right sibling to the left
+            for (int i = 0; i < rightSibling->size - 1; i++) {
+                rightSibling->keys[i] = rightSibling->keys[i + 1];
+            }
+            leaf->size++;
+            rightSibling->size--;
+        }
+            // Merge with the left sibling
+        else if (leftSibling) {
+            // Copy all keys from the current leaf node to the left sibling
+            for (int i = 0, j = leftSibling->size; i < leaf->size; i++, j++) {
+                leftSibling->keys[j] = leaf->keys[i];
+            }
+            leftSibling->size += leaf->size;
+            leftSibling->children[nodeSize] = leaf->children[nodeSize];
+
+            // update parent
+            for (int i = indexInParent; i < parent->size - 1; i++) {
+                parent->keys[i] = parent->keys[i + 1];
+                parent->children[i + 1] = parent->children[i + 2];
+            }
+            parent->size--;
+
+            delete leaf;
+        }
+            // Merge with the right sibling
+        else if (rightSibling) {
+            // Copy all keys from the right sibling to the current leaf node
+            for (int i = 0, j = leaf->size; i < rightSibling->size; i++, j++) {
+                leaf->keys[j] = rightSibling->keys[i];
+            }
+            leaf->size += rightSibling->size;
+            leaf->children[nodeSize] = rightSibling->children[nodeSize];
+
+            // update parent key
+            for (int i = indexInParent + 1; i < parent->size - 1; i++) {
+                parent->keys[i] = parent->keys[i + 1];
+                parent->children[i + 1] = parent->children[i + 2];
+            }
+            parent->size--;
+
+            delete rightSibling;
+        }
+    }
+
+    void handleNonLeafUnderflow(Node* nonLeafNode, int index) { //input is the parent pointer and its corresponding child index
+        Node* leftSibling;
+        Node* rightSibling;
+
+        if (index > 0) {
+            leftSibling = nonLeafNode->children[index - 1];
+        }
+        else {
+            leftSibling = nullptr;
+        }
+
+        if (index < nonLeafNode->size) {
+            rightSibling = nonLeafNode->children[index + 1];
+        }
+        else {
+            rightSibling = nullptr;
+        }
+        Node* child = nonLeafNode->children[index];
+
+        // Borrow from the left sibling
+        if (leftSibling && leftSibling->size > (nodeSize+1) / 2 - 1) {
+            // Shift all keys and children in the child node to the right
+            for (int i = child->size; i > 0; i--) {
+                child->keys[i] = child->keys[i - 1];
+                child->children[i + 1] = child->children[i];
+            }
+            child->children[1] = child->children[0];
+
+            child->keys[0] = nonLeafNode->keys[index - 1];
+            nonLeafNode->keys[index - 1] = leftSibling->keys[leftSibling->size - 1];
+            child->children[0] = leftSibling->children[leftSibling->size];
+
+            child->size++;
+            leftSibling->size--;
+        }
+            // Borrow from the right sibling
+        else if (rightSibling && rightSibling->size > (nodeSize+1) / 2 - 1) {
+            child->keys[child->size] = nonLeafNode->keys[index];
+            nonLeafNode->keys[index] = rightSibling->keys[0];
+            child->children[child->size + 1] = rightSibling->children[0];
+
+            // Shift all keys and children in the right sibling to the left
+            for (int i = 0; i < rightSibling->size - 1; i++) {
+                rightSibling->keys[i] = rightSibling->keys[i + 1];
+                rightSibling->children[i] = rightSibling->children[i + 1];
+            }
+            rightSibling->children[rightSibling->size - 1] = rightSibling->children[rightSibling->size];
+
+            child->size++;
+            rightSibling->size--;
+        }
+            // Merge with the left sibling
+        else if (leftSibling) {
+            // Copy all keys and children from the child node to the left sibling
+            leftSibling->keys[leftSibling->size] = nonLeafNode->keys[index - 1];
+            for (int i = 0, j = leftSibling->size + 1; i < child->size; i++, j++) {
+                leftSibling->keys[j] = child->keys[i];
+                leftSibling->children[j] = child->children[i];
+            }
+            leftSibling->children[leftSibling->size + child->size + 1] = child->children[child->size];
+            leftSibling->size += child->size + 1;
+
+            // update parent
+            for (int i = index - 1; i < nonLeafNode->size - 1; i++) {
+                nonLeafNode->keys[i] = nonLeafNode->keys[i + 1];
+                nonLeafNode->children[i + 1] = nonLeafNode->children[i + 2];
+            }
+            nonLeafNode->size--;
+
+            delete child;
+        }
+            // Merge with the right sibling
+        else if (rightSibling) {
+            // Copy all keys and children from the right sibling to the child node
+            child->keys[child->size] = nonLeafNode->keys[index];
+            for (int i = 0, j = child->size + 1; i < rightSibling->size; i++, j++) {
+                child->keys[j] = rightSibling->keys[i];
+                child->children[j] = rightSibling->children[i];
+            }
+            child->children[child->size + rightSibling->size + 1] = rightSibling->children[rightSibling->size];
+            child->size += rightSibling->size + 1;
+
+            // update parent
+            for (int i = index; i < nonLeafNode->size - 1; i++) {
+                nonLeafNode->keys[i] = nonLeafNode->keys[i + 1];
+                nonLeafNode->children[i + 1] = nonLeafNode->children[i + 2];
+            }
+            nonLeafNode->size--;
+
+            delete rightSibling;
+        }
+    }
+
+/*    void removeRange(float startVal, float endVal) { //may not be correct copied from chatgpt
+        Node* current = root;
+
+        // Traverse to the leftmost leaf node in the range
+        while (!current->is_leaf) {
+            int i = 0;
+            while (i < current->size && startVal > current->keys[i].val) {
+                i++;
+            }
+            current = current->children[i];
+        }
+
+        // Traverse the leaves and delete the keys in the range
+        while (current && current->keys[0].val <= endVal) {
+            // Delete the keys in the current leaf that fall in the range
+            for (int i = 0; i < current->size;) {
+                if (current->keys[i].val >= startVal && current->keys[i].val <= endVal) {
+                    // Shift keys to the left to fill the gap
+                    for (int j = i; j < current->size - 1; j++) {
+                        current->keys[j] = current->keys[j + 1];
+                    }
+                    current->size--;
+                } else {
+                    i++;
+                }
+            }
+            // Handle underflow if needed
+            if (current->size < (nodeSize + 1) / 2 - 1) {
+                handleLeafUnderflow(current);
+            }
+            // Move to the next leaf
+            current = current->children[nodeSize];
+        }
+    }*/
 };
