@@ -641,39 +641,4 @@ public:
             delete rightSibling;
         }
     }
-
-/*    void removeRange(float startVal, float endVal) { //may not be correct copied from chatgpt
-        Node* current = root;
-
-        // Traverse to the leftmost leaf node in the range
-        while (!current->is_leaf) {
-            int i = 0;
-            while (i < current->size && startVal > current->keys[i].val) {
-                i++;
-            }
-            current = current->children[i];
-        }
-
-        // Traverse the leaves and delete the keys in the range
-        while (current && current->keys[0].val <= endVal) {
-            // Delete the keys in the current leaf that fall in the range
-            for (int i = 0; i < current->size;) {
-                if (current->keys[i].val >= startVal && current->keys[i].val <= endVal) {
-                    // Shift keys to the left to fill the gap
-                    for (int j = i; j < current->size - 1; j++) {
-                        current->keys[j] = current->keys[j + 1];
-                    }
-                    current->size--;
-                } else {
-                    i++;
-                }
-            }
-            // Handle underflow if needed
-            if (current->size < (nodeSize + 1) / 2 - 1) {
-                handleLeafUnderflow(current);
-            }
-            // Move to the next leaf
-            current = current->children[nodeSize];
-        }
-    }*/
 };

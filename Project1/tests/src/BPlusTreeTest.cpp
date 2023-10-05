@@ -141,6 +141,9 @@ TEST_CASE("Unit Test 3 - BPlusTree removing duplicate") {
     tree.insert(11.5, nullptr);
     tree.insert(19.5, nullptr);
     tree.insert(28.0, nullptr);
+    tree.insert(12.0, nullptr);
+    tree.insert(12.0, nullptr);
+    tree.insert(12.0, nullptr);
 
     tree.getRootValue();
     std::cout << "Number of Levels: " << tree.getNumberOfLevels() << std::endl;
@@ -250,33 +253,4 @@ TEST_CASE("Unit Test 4 - BPlusTree Larger Tree and multiple removal") {
 }
 
 
-/*
-TEST_CASE("Unit Test 5 - BPlusTree removing range") { //Something seems wrong with the function not the
-    BPlusTree tree;
 
-    // Insert key-value pairs into the B+ tree
-    tree.insert(10.5, nullptr);
-    tree.insert(5.0, nullptr);
-    tree.insert(20.0, nullptr);
-    tree.insert(15.0, nullptr);
-    tree.insert(25.0, nullptr);
-    tree.insert(12.0, nullptr);
-    tree.insert(11.0, nullptr);
-    tree.insert(12.0, nullptr);
-    tree.insert(6.0, nullptr);
-    tree.insert(19.0, nullptr);
-    tree.insert(26.0, nullptr);
-    tree.insert(27.0, nullptr);
-    tree.insert(11.5, nullptr);
-    tree.insert(19.5, nullptr);
-    tree.insert(28.0, nullptr);
-
-    tree.getRootValue();
-    std::cout << "Number of Levels: " << tree.getNumberOfLevels() << std::endl;
-    std::cout << "Number of Nodes: " << tree.getNumberOfNodes() << std::endl;
-
-    tree.printTree();
-    tree.removeRange(6.0, 15.0);
-    std::cout<<"after removal 6 to 15 inclusive" <<std::endl;
-    tree.printTree();
-}*/
