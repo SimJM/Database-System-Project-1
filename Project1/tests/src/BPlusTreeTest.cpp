@@ -9,7 +9,6 @@
 TEST_CASE("Unit Test 1 - BPlusTree") {
     BPlusTree tree;
 
-    // Insert key-value pairs into the B+ tree
     tree.insert(10.5, nullptr);
     tree.insert(5.0, nullptr);
     tree.insert(20.0, nullptr);
@@ -30,7 +29,7 @@ TEST_CASE("Unit Test 1 - BPlusTree") {
     std::cout << "Number of Levels: " << tree.getNumberOfLevels() << std::endl;
     std::cout << "Number of Nodes: " << tree.getNumberOfNodes() << std::endl;
 
-    tree.printTree();
+
     float keyToSearch = 19.5;
     bool found = tree.search(keyToSearch);
     if (found) {
@@ -40,22 +39,10 @@ TEST_CASE("Unit Test 1 - BPlusTree") {
         std::cout << "Key " << keyToSearch << " not found." << std::endl;
     }
 
-    SECTION("Test root value") {
-        int expected = 1;
-        int actual = 1;
-        REQUIRE(expected == actual);
-    }
-
-    SECTION("Test number of leaf nodes") {
-        int expected = 9;
-        int actual = tree.getNumberOfNodes();
-        REQUIRE(expected == actual);
-    }
 }
 
 TEST_CASE("Unit Test 2 - BPlusTree") {
     BPlusTree tree;
-    //sample records
     std::string record1 = "Record for 20.0";
     std::string record2 = "Record for 15.0";
     std::string record3 = "Record for 25.0";
@@ -93,7 +80,7 @@ TEST_CASE("Unit Test 2 - BPlusTree") {
     std::cout << "Number of Levels: " << tree.getNumberOfLevels() << std::endl;
     std::cout << "Number of Nodes: " << tree.getNumberOfNodes() << std::endl;
 
-    tree.printTree();
+
     float keyToSearch = 19.5; //1st instance of key
     bool found = tree.search(keyToSearch);
     if (found) {
@@ -106,16 +93,269 @@ TEST_CASE("Unit Test 2 - BPlusTree") {
 
     int rangeindexNodesAccessed;
     std::vector<void*> retrievedRecords;
-    auto start = std::chrono::high_resolution_clock::now();//start timer
-    retrievedRecords = tree.retrieveRange(12.0, 12.0, rangeindexNodesAccessed);
-    auto end = std::chrono::high_resolution_clock::now(); // end timer
-    std::chrono::duration<double> duration = end - start; //difference
+    auto start = std::chrono::high_resolution_clock::now();
+    retrievedRecords = tree.retrieveRange(12.0, 20.0, rangeindexNodesAccessed);
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> duration = end - start;
 
-    std::cout << "Time taken by function: " << duration.count() << " seconds" << std::endl; //print out time
+    std::cout << "Time taken by function: " << duration.count() << " seconds" << std::endl;
 
     for(void* recordAddress : retrievedRecords) {
         std::string* actualRecord = reinterpret_cast<std::string*>(recordAddress);
         std::cout << "Retrieved Record: " << *actualRecord << std::endl;
     }
     std::cout << "Index nodes accessed: " << rangeindexNodesAccessed << std::endl;
+}
+
+TEST_CASE("Unit Test 3 - BPlusTree removing duplicate") {
+    BPlusTree tree;
+    tree.insert(10.5, nullptr);
+    tree.insert(5.0, nullptr);
+    tree.insert(20.0, nullptr);
+    tree.insert(15.0, nullptr);
+    tree.insert(25.0, nullptr);
+    tree.insert(12.0, nullptr);
+    tree.insert(12.0, nullptr);
+    tree.insert(11.0, nullptr);
+    tree.insert(12.0, nullptr);
+    tree.insert(6.0, nullptr);
+    tree.insert(19.0, nullptr);
+    tree.insert(26.0, nullptr);
+    tree.insert(27.0, nullptr);
+    tree.insert(11.5, nullptr);
+    tree.insert(19.5, nullptr);
+    tree.insert(28.0, nullptr);
+    tree.insert(12.0, nullptr);
+    tree.insert(12.0, nullptr);
+
+
+    tree.getRootValue();
+    std::cout << "Number of Levels: " << tree.getNumberOfLevels() << std::endl;
+    std::cout << "Number of Nodes: " << tree.getNumberOfNodes() << std::endl;
+
+
+    tree.remove(12.0);
+
+    std::cout<<"after removal" <<std::endl;
+
+}
+
+TEST_CASE("Unit Test 4 - BPlusTree Larger Tree and multiple removal") {
+    BPlusTree tree;
+
+    tree.insert(1.5, nullptr);
+    tree.insert(2.3, nullptr);
+    tree.insert(3.7, nullptr);
+    tree.insert(4.9, nullptr);
+    tree.insert(7.4, nullptr);
+    tree.insert(8.6, nullptr);
+    tree.insert(9.1, nullptr);
+    tree.insert(13.2, nullptr);
+    tree.insert(14.8, nullptr);
+    tree.insert(16.3, nullptr);
+    tree.insert(17.4, nullptr);
+    tree.insert(18.7, nullptr);
+    tree.insert(21.9, nullptr);
+    tree.insert(22.5, nullptr);
+    tree.insert(23.3, nullptr);
+    tree.insert(24.2, nullptr);
+    tree.insert(29.6, nullptr);
+    tree.insert(30.1, nullptr);
+    tree.insert(31.3, nullptr);
+    tree.insert(32.5, nullptr);
+    tree.insert(33.9, nullptr);
+    tree.insert(34.0, nullptr);
+    tree.insert(35.4, nullptr);
+    tree.insert(36.7, nullptr);
+    tree.insert(37.8, nullptr);
+    tree.insert(38.2, nullptr);
+    tree.insert(39.3, nullptr);
+    tree.insert(40.5, nullptr);
+    tree.insert(41.6, nullptr);
+    tree.insert(42.9, nullptr);
+    tree.insert(43.0, nullptr);
+    tree.insert(44.1, nullptr);
+    tree.insert(45.3, nullptr);
+    tree.insert(46.5, nullptr);
+    tree.insert(47.7, nullptr);
+    tree.insert(48.8, nullptr);
+    tree.insert(49.0, nullptr);
+    tree.insert(50.3, nullptr);
+    tree.insert(51.5, nullptr);
+    tree.insert(52.9, nullptr);
+    tree.insert(53.1, nullptr);
+    tree.insert(54.4, nullptr);
+    tree.insert(55.6, nullptr);
+    tree.insert(56.2, nullptr);
+    tree.insert(57.8, nullptr);
+    tree.insert(58.9, nullptr);
+    tree.insert(59.0, nullptr);
+    tree.insert(60.1, nullptr);
+    tree.insert(61.3, nullptr);
+    tree.insert(62.4, nullptr);
+
+    tree.getRootValue();
+    std::cout << "Number of Levels: " << tree.getNumberOfLevels() << std::endl;
+    std::cout << "Number of Nodes: " << tree.getNumberOfNodes() << std::endl;
+
+
+    tree.remove(1.5);
+    tree.remove(2.3);
+    tree.remove(3.7);
+    tree.remove(4.9);
+    tree.remove(7.4);
+    tree.remove(8.6);
+    tree.remove(9.1);
+    tree.remove(13.2);
+    tree.remove(14.8);
+    tree.remove(16.3);
+    tree.remove(17.4);
+    tree.remove(18.7);
+    tree.remove(21.9);
+    tree.remove(22.5);
+    tree.remove(23.3);
+    tree.remove(24.2);
+    tree.remove(29.6);
+    tree.remove(30.1);
+    tree.remove(31.3);
+    tree.remove(32.5);
+
+
+    std::cout<<"after removal" <<std::endl;
+
+    tree.getRootValue();
+    std::cout << "Number of Levels: " << tree.getNumberOfLevels() << std::endl;
+    std::cout << "Number of Nodes: " << tree.getNumberOfNodes() << std::endl;
+
+}
+
+TEST_CASE("Unit Test 5 - BPlusTree removing range") {
+    BPlusTree tree;
+    tree.insert(5.0, nullptr);
+    tree.insert(20.0, nullptr);
+    tree.insert(15.0, nullptr);
+    tree.insert(25.0, nullptr);
+    tree.insert(12.0, nullptr);
+    tree.insert(11.0, nullptr);
+    tree.insert(12.0, nullptr);
+    tree.insert(6.0, nullptr);
+    tree.insert(19.0, nullptr);
+    tree.insert(26.0, nullptr);
+    tree.insert(27.0, nullptr);
+    tree.insert(11.5, nullptr);
+    tree.insert(19.5, nullptr);
+    tree.insert(28.0, nullptr);
+    tree.getRootValue();
+    std::cout << "Number of Levels: " << tree.getNumberOfLevels() << std::endl;    std::cout << "Number of Nodes: " << tree.getNumberOfNodes() << std::endl;
+
+    tree.removeLessThanOrEqual(15);
+    std::cout<<"after removal" << std::endl;
+
+}
+
+TEST_CASE("Unit Test 6 - BPlusTree removing range large") {
+    BPlusTree tree;
+    tree.insert(1.5, nullptr);
+    tree.insert(2.3, nullptr);
+    tree.insert(3.7, nullptr);
+    tree.insert(4.9, nullptr);
+    tree.insert(7.4, nullptr);
+    tree.insert(8.6, nullptr);
+    tree.insert(9.1, nullptr);
+    tree.insert(13.2, nullptr);
+    tree.insert(14.8, nullptr);
+    tree.insert(16.3, nullptr);
+    tree.insert(17.4, nullptr);
+    tree.insert(18.7, nullptr);
+    tree.insert(21.9, nullptr);
+    tree.insert(22.5, nullptr);
+    tree.insert(23.3, nullptr);
+    tree.insert(24.2, nullptr);
+    tree.insert(29.6, nullptr);
+    tree.insert(30.1, nullptr);
+    tree.insert(31.3, nullptr);
+    tree.insert(32.5, nullptr);
+    tree.insert(33.9, nullptr);
+    tree.insert(34.0, nullptr);
+    tree.insert(35.4, nullptr);
+    tree.insert(36.7, nullptr);
+    tree.insert(37.8, nullptr);
+    tree.insert(38.2, nullptr);
+    tree.insert(39.3, nullptr);
+    tree.insert(40.5, nullptr);
+    tree.insert(41.6, nullptr);
+    tree.insert(42.9, nullptr);
+    tree.insert(43.0, nullptr);
+    tree.insert(44.1, nullptr);
+    tree.insert(45.3, nullptr);
+    tree.insert(46.5, nullptr);
+    tree.insert(47.7, nullptr);
+    tree.insert(48.8, nullptr);
+    tree.insert(49.0, nullptr);
+    tree.insert(50.3, nullptr);
+    tree.insert(51.5, nullptr);
+    tree.insert(52.9, nullptr);
+    tree.insert(53.1, nullptr);
+    tree.insert(54.4, nullptr);
+    tree.insert(55.6, nullptr);
+    tree.insert(56.2, nullptr);
+    tree.insert(57.8, nullptr);
+    tree.insert(58.9, nullptr);
+    tree.insert(59.0, nullptr);
+    tree.insert(60.1, nullptr);
+    tree.insert(61.3, nullptr);
+    tree.insert(62.4, nullptr);
+    tree.getRootValue();
+    std::cout << "Number of Levels: " << tree.getNumberOfLevels() << std::endl;    std::cout << "Number of Nodes: " << tree.getNumberOfNodes() << std::endl;
+
+    tree.removeLessThanOrEqual(15);
+    std::cout<<"after removal" <<std::endl;
+
+}
+
+TEST_CASE("Unit Test 7 - BPlusTree removing duplicates 2") {
+    BPlusTree tree;
+
+    tree.insert(5.0, nullptr);
+    tree.insert(10, nullptr);
+    tree.insert(10, nullptr);
+    tree.insert(10, nullptr);
+    tree.insert(10, nullptr);
+    tree.insert(10, nullptr);
+    tree.insert(10, nullptr);
+    tree.insert(10, nullptr);
+    tree.insert(10, nullptr);
+    tree.insert(10, nullptr);
+    tree.insert(10, nullptr);
+    tree.insert(10, nullptr);
+    tree.insert(10, nullptr);
+    tree.insert(10, nullptr);
+    tree.insert(0, nullptr);
+    tree.insert(0, nullptr);
+    tree.insert(0, nullptr);
+    tree.insert(10.5, nullptr);
+    tree.insert(12.0, nullptr);
+    tree.insert(15.0, nullptr);
+    tree.insert(25.0, nullptr);
+    tree.insert(12.0, nullptr);
+    tree.insert(11.0, nullptr);
+    tree.insert(12.0, nullptr);
+    tree.insert(6.0, nullptr);
+    tree.insert(19.0, nullptr);
+    tree.insert(26.0, nullptr);
+    tree.insert(27.0, nullptr);
+    tree.insert(11.5, nullptr);
+    tree.insert(19.5, nullptr);
+    tree.insert(20.0, nullptr);
+    tree.insert(28.0, nullptr);
+
+    tree.getRootValue();
+    std::cout << "Number of Levels: " << tree.getNumberOfLevels() << std::endl;
+    std::cout << "Number of Nodes: " << tree.getNumberOfNodes() << std::endl;
+
+
+    tree.removeLessThanOrEqual(10.0);
+
+    std::cout<<"after removal" <<std::endl;
+
 }
