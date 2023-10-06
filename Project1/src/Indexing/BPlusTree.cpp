@@ -372,6 +372,7 @@ public:
 
         return recordAddresses;
     }
+
     void remove(float val) {
         if (root == nullptr){
             return;
@@ -409,11 +410,11 @@ public:
             return false;//no more keys to remove or no key
         }
         else { // update internal node key ####I THINK ERROR IS HERE
-            if (i < current->size && current->keys[i].val == val) {//change from i to i-1// if key is found in the c1
+            if (i < current->size && current->keys[i].val == val) {//change from i to i-1?
                 // If the key is found in an internal node
-                Node* successorNode = current->children[i+1]; //change from i+1 to i?c2
+                Node* successorNode = current->children[i+1]; //change from i+1 to i?
                 while (!successorNode->is_leaf) {
-                    successorNode = successorNode->children[0];// change from 0 to 1??c3
+                    successorNode = successorNode->children[0];// change from 0 to 1??
                 }
                 float successorVal = successorNode->keys[0].val;
                 if (removeRecursive(current->children[i+1], successorVal)) { // i feel like the error is here
@@ -462,7 +463,6 @@ public:
         /*for (int i = 0; i <= parent->size && indexInParent == -1; i++) {
             if (parent->children[i] == leaf) {
                 indexInParent = i;
-
                 // Handling left sibling
                 if (i-1 >= 0) {
                     leftSibling = parent->children[i-1];
@@ -498,7 +498,7 @@ public:
             leftSibling->size--;
         }
             // Borrow from the right sibling
-        else if (rightSibling && rightSibling->size > (nodeSize+1) / 2 + 1) { //SIZING change from -1 to +1 to 0
+        else if (rightSibling && rightSibling->size > (nodeSize+1) / 2 + 0) { //SIZING change from -1 to +1 to 0
             //leaf->keys[leaf->size] = parent->keys[indexInParent+1];
             //parent->keys[indexInParent+1] = rightSibling->keys[0];
             //replace top with bottom
@@ -639,6 +639,22 @@ public:
             nonLeafNode->size--;
 
             delete rightSibling;
+        }
+    }
+    void removeLessThanOrEqual(float key) {
+        // Check if the tree is empty
+        if (root == nullptr) {
+            return;
+        }
+        while (root!=nullptr){
+            Node* current = root;
+            while (!current->is_leaf) {
+                current=current->children[0];
+            }
+            if (current->keys[0].val >key)
+                return;
+            else{
+                remove(current->keys[0].val);}
         }
     }
 };
