@@ -53,4 +53,14 @@ TEST_CASE("Unit Test - Storage") {
         Record retrievedRecord = testStorage.getRecord(address);
         REQUIRE(retrievedRecord == testRecord);
     }
+
+    SECTION("Delete Record") {
+        Storage testStorage;
+        vector<Address> addList;
+        addList.push_back(Address(1,0));
+
+        testStorage.deleteRecord(addList);
+        REQUIRE(!testStorage.containsFilledBlock(1));
+    }
+
 }
