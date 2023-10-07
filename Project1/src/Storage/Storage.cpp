@@ -28,10 +28,6 @@ int Storage::getFirstAvailableBlockId() {
 }
 
 Address Storage::insertRecordIntoBlock(int blockPtr, const Record& rec) {
-    if (blockPtr == -1) {
-        // throw error
-    }
-
     int offset = blocks[blockPtr].addRecord(rec);
 
     if (blocks[blockPtr].isFull()) {
@@ -58,9 +54,6 @@ int Storage::getNumOfFullBlocks() const {
 }
 
 Block Storage::getBlock(int blockPtr) const {
-    if (blockPtr == -1) {
-        // throw error
-    }
     Block block = blocks[blockPtr];
     return block;
 }
@@ -83,8 +76,20 @@ int Storage::getDataBlockAccessCount(vector<Address*> addresses) const {
     return numOfBlockAccessed;
 }
 
-double Storage::getAverageOfFg3PctHome(vector<Address*> addresses) const {
+long long Storage::timeTakenToRetrieveRecords(vector<Address*> addresses) const{
     auto startTime = high_resolution_clock::now();
+
+    int len = addresses.size();
+    for (int i = 0; i < len; i++) {
+        Record r = getRecord(*addresses[i]);
+    }
+
+    auto endTime = high_resolution_clock::now();
+    long long duration = duration_cast<nanoseconds>(endTime - startTime).count();
+    return duration;
+}
+
+double Storage::getAverageOfFg3PctHome(vector<Address*> addresses) const {
     double total;
     int len = addresses.size();
     for (int i = 0; i < len; i++) {
@@ -92,11 +97,6 @@ double Storage::getAverageOfFg3PctHome(vector<Address*> addresses) const {
         double fg3PctHome = r.getFg3PctHome();
         total = total + fg3PctHome;
     }
-
-    auto endTime = high_resolution_clock::now();
-    auto duration = duration_cast<nanoseconds>(endTime - startTime);
-    cout << "Total duration for getAverageOfFg3PctHome: " << duration.count() << " nanoseconds" << endl;
-
     double average = total/len;
     return average;
 }
@@ -157,10 +157,11 @@ int Storage::runBruteForceRangeQuery(double FG_PCT_home_lower_val, double FG_PCT
     return countDataBlockAccess;
 }
 
-void Storage::deleteRecord(vector<Address>& addList) {
-    for (const Address& add : addList) {
-        int blockId = add.getBlockID();
-        int offset = add.getOffset();
+void Storage::deleteRecord(vector<Address*> addList) {
+    auto startTime = high_resolution_clock::now();
+    for (const Address* add : addList) {
+        int blockId = add->getBlockID();
+        int offset = add->getOffset();
         Block block = getBlock(blockId);
         block.deleteRecordFromBlock(offset);
 
@@ -169,16 +170,50 @@ void Storage::deleteRecord(vector<Address>& addList) {
             addAvailableBlock(blockId);
         }
     }
+    auto endTime = high_resolution_clock::now();
+    long long duration = duration_cast<nanoseconds>(endTime - startTime).count();
+    std::cout << "Time taken to delete list of records: " + std::to_string(duration) + " nanoseconds"<< std::endl;
 }
 
 bool Storage::containsFilledBlock(int blockId) const {
     return find(filledBlocks.begin(), filledBlocks.end(), blockId) != filledBlocks.end();
 }
 
-void Storage::removeFilledBlock(int blockId) {
+int Storage::removeFilledBlock(int blockId) {
     filledBlocks.erase(remove(filledBlocks.begin(), filledBlocks.end(), blockId), filledBlocks.end());
+    return 0;
 }
 
-void Storage::addAvailableBlock(int blockId) {
+int Storage::addAvailableBlock(int blockId) {
     availableBlocks.push_back(blockId);
+    return 0;
+}
+
+
+int Storage::runBruteForceRangeDelete(double FG_PCT_home_lower_val, double FG_PCT_home_upper_val) const {
+    double FG_PCT_home_value;
+    int countDataBlockAccess = 0;
+    vector<Record> resultOfSearchQuery;
+
+    auto startTiming = high_resolution_clock::now();
+
+    for(int blockPtr : filledBlocks){
+        countDataBlockAccess++;
+        Block block = getBlock(blockPtr);
+
+        int curNumOfRecordsInBlock = block.getCurrentNumOfRecords();
+        for (int i=0; i<curNumOfRecordsInBlock; i++){
+            Record rec = block.getRecord(i);
+            FG_PCT_home_value = rec.getFgPctHome();
+            if(FG_PCT_home_value >= FG_PCT_home_lower_val && FG_PCT_home_value <= FG_PCT_home_upper_val){
+                block.deleteRecordFromBlock(i);
+            }
+        }
+    }
+
+    auto endTiming = high_resolution_clock::now();
+    auto durationTime = duration_cast<nanoseconds>(endTiming - startTiming);
+    cout << "Running time of the brute-force linear scan method for Range Delete: " << durationTime.count() << " nanoseconds" << endl;
+
+    return countDataBlockAccess;
 }

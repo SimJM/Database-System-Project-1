@@ -1,7 +1,10 @@
+#include <chrono>
 #include <iostream>
 #include <queue>
 #include <vector>
 #include "Storage/Address.h"
+
+using namespace std::chrono;
 
 const int nodeSize = 22;
 
@@ -315,7 +318,17 @@ public:
         return rangeindexNodesAccessed;
     }
 
-    std::vector<Address*> retrieveRange(float start, float end, int &rangeindexNodesAccessed) {
+    long long timeTakenToRetrieveRecords(float start, float end, int &rangeindexNodesAccessed) const{
+        auto startTime = high_resolution_clock::now();
+
+        retrieveRange(start, end, rangeindexNodesAccessed);
+
+        auto endTime = high_resolution_clock::now();
+        long long duration = duration_cast<nanoseconds>(endTime - startTime).count();
+        return duration;
+    }
+
+    std::vector<Address*> retrieveRange(float start, float end, int &rangeindexNodesAccessed) const {
         rangeindexNodesAccessed = 0;
         std::vector<Address*> recordAddresses;
 
@@ -592,7 +605,17 @@ public:
             delete rightSibling;
         }
     }
+
+    long long timeTakenToRemove(float key) const{
+        auto startTime = high_resolution_clock::now();
+
+        auto endTime = high_resolution_clock::now();
+        long long duration = duration_cast<nanoseconds>(endTime - startTime).count();
+        return duration;
+    }
+
     void removeLessThanOrEqual(float key) {
+        auto startTime = high_resolution_clock::now();
         if (root == nullptr) {
             return;
         }
@@ -602,11 +625,15 @@ public:
                 current=current->children[0];
             }
             if (current->keys[0].val > key) {
+                auto endTime = high_resolution_clock::now();
+                long long duration = duration_cast<nanoseconds>(endTime - startTime).count();
+                std::cout << "Time taken to removeLessThanOrEqual: " + std::to_string(duration) + " nanoseconds"<< std::endl;
                 return;
             }
             else{
                 remove(current->keys[0].val);
             }
         }
+
     }
 };

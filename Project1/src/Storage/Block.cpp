@@ -12,9 +12,6 @@ Block::Block() {
  }
 
 Record Block::getRecord(int offset) const {
-    if (offset < 0 || offset >= records.size()) {
-        // throw error
-    }
     return records[offset];
 }
 
@@ -26,7 +23,6 @@ int Block::getMaxNumOfRecords() const {
     return maxNumOfRecords;
 };
 
-// addRecord adds the record into the block and returns its offset
 int Block::addRecord(const Record& record) {
     if (!isFull()) {
         records.push_back(record);
@@ -53,11 +49,6 @@ bool Block::isFull() const {
 }
 
 void Block::deleteRecordFromBlock(int offset) {
-    if (offset < 0 || offset >= records.size()) {
-        // throw error
-        return;
-    }
-
     // to delete the record
     records.erase(records.begin() + offset);
     currentNumOfRecords--;

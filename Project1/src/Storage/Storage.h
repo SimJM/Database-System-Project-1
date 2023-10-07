@@ -12,7 +12,7 @@ class Storage {
 public:
     Storage();
 
-    Address insertRecordIntoBlock(int blockPtr, const Record& rec);//kiv
+    Address insertRecordIntoBlock(int blockPtr, const Record& rec);
     Address writeRecordToStorage(const Record& rec);
 
     int getFirstAvailableBlockId();
@@ -21,13 +21,15 @@ public:
     Block getBlock(int blockPtr) const;
     Record getRecord(const Address& add) const;
     int getDataBlockAccessCount(vector<Address*> addresses) const;
+    long long timeTakenToRetrieveRecords(vector<Address*> addresses) const;
     double getAverageOfFg3PctHome(vector<Address*> addresses) const;
     int runBruteForceSearchQuery(double FG_PCT_home) const;
     int runBruteForceRangeQuery(double FG_PCT_home_lower_val, double FG_PCT_home_upper_val) const;
-    void deleteRecord(vector<Address>& addList);
+    int runBruteForceRangeDelete(double FG_PCT_home_lower_val, double FG_PCT_home_upper_val) const;
+    void deleteRecord(vector<Address*> addList);
     bool containsFilledBlock(int blockId) const;
-    void removeFilledBlock(int blockId);
-    void addAvailableBlock(int blockId);
+    int removeFilledBlock(int blockId);
+    int addAvailableBlock(int blockId);
 
 private:
     vector<Block> blocks;

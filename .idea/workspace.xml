@@ -29,9 +29,9 @@
     <list default="true" id="864cc76d-9617-4272-b584-ff845899fdab" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project1/src/Indexing/BPlusTree.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Indexing/BPlusTree.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Record.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Record.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Record.h" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Record.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Block.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Block.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Storage.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Storage.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Storage.h" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Storage.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project1/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -99,6 +99,11 @@
   }
 }</component>
   <component name="RunManager" selected="CMake Application.Project1">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="BPlusTreeTest" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project1" TARGET_NAME="BPlusTreeTest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Project1" RUN_TARGET_NAME="BPlusTreeTest" TEST_MODE="SUITE_TEST">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -106,12 +111,6 @@
       </method>
     </configuration>
     <configuration name="BlockTest" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project1" TARGET_NAME="BlockTest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Project1" RUN_TARGET_NAME="BlockTest" TEST_MODE="SUITE_TEST">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-        <option name="BeforeTestRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Integration Test - Parser and Record" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project1" TARGET_NAME="ParserTest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Project1" RUN_TARGET_NAME="ParserTest" TEST_METHOD="Integration Test - Parser and Record " TEST_MODE="SUITE_TEST">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
         <option name="BeforeTestRunTask" enabled="true" />
@@ -153,6 +152,12 @@
         <option name="BeforeTestRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Unit Test 1 - BPlusTree" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project1" TARGET_NAME="BPlusTreeTest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Project1" RUN_TARGET_NAME="BPlusTreeTest" TEST_METHOD="Unit Test 1 - BPlusTree" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Project1" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project1" TARGET_NAME="Project1" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Project1" RUN_TARGET_NAME="Project1">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -163,20 +168,20 @@
       <item itemvalue="Catch.BPlusTreeTest" />
       <item itemvalue="Catch.ParserTest" />
       <item itemvalue="Catch.StorageTest" />
+      <item itemvalue="Catch.Unit Test 1 - BPlusTree" />
       <item itemvalue="Catch.Unit Test - Storage" />
       <item itemvalue="Catch.Unit Test - Block" />
       <item itemvalue="Catch.Unit Test - Parser" />
       <item itemvalue="Catch.Unit Test - Record" />
-      <item itemvalue="Catch.Integration Test - Parser and Record" />
       <item itemvalue="CMake Application.Project1" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Catch.Unit Test 1 - BPlusTree" />
         <item itemvalue="Catch.Unit Test - Storage" />
         <item itemvalue="Catch.Unit Test - Block" />
         <item itemvalue="Catch.Unit Test - Record" />
         <item itemvalue="Catch.Unit Test - Parser" />
-        <item itemvalue="Catch.Integration Test - Parser and Record" />
       </list>
     </recent_temporary>
   </component>
@@ -194,6 +199,7 @@
       <workItem from="1695317942445" duration="1720000" />
       <workItem from="1696256428948" duration="1196000" />
       <workItem from="1696257639430" duration="9227000" />
+      <workItem from="1696658964864" duration="1591000" />
     </task>
     <servers />
   </component>
