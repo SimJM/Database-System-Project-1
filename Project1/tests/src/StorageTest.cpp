@@ -5,16 +5,19 @@
 #include "catch.hpp"
 #include "../../src/Storage/Storage.h"
 
-TEST_CASE("Unit Test - Storage") {
+TEST_CASE("Unit Test - Storage")
+{
     // check everything is 0 at initialisation
-    SECTION("Storage Initialisation") {
+    SECTION("Storage Initialisation")
+    {
         Storage testStorage;
         int numOfBlocks = testStorage.getNumOfFullBlocks();
         REQUIRE(numOfBlocks == 0);
         REQUIRE(testStorage.getCurrentNumOfRecords() == 0);
     }
 
-    SECTION("Inserting Records") {
+    SECTION("Inserting Records")
+    {
         Storage testStorage;
         Record testRecord1("17/09/2023", 1234567890, 123, 0.500, 0.900, 0.450, 23, 45, 1);
         Record testRecord2("18/09/2023", 9876543210, 456, 0.600, 0.850, 0.400, 30, 40, 0);
@@ -23,18 +26,20 @@ TEST_CASE("Unit Test - Storage") {
         Address address2 = testStorage.writeRecordToStorage(testRecord2);
 
         // Check if the records were successfully inserted
-        REQUIRE(address1.getBlockID()==0);
-        REQUIRE(address2.getBlockID()==0);
+        REQUIRE(address1.getBlockID() == 0);
+        REQUIRE(address2.getBlockID() == 0);
     }
 
-    SECTION("Block Status") {
+    SECTION("Block Status")
+    {
         Storage testStorage;
         Record testRecord("17/09/2023", 1234567890, 123, 0.500, 0.900, 0.450, 23, 45, 1);
 
         int blockPtr = testStorage.getFirstAvailableBlockId();
 
         // Insert 5 records into the same block
-        for (int i = 0; i < 5; ++i) {
+        for (int i = 0; i < 5; ++i)
+        {
             Address address = testStorage.insertRecordIntoBlock(blockPtr, testRecord);
             REQUIRE(address.getBlockID() == 0);
         }
@@ -44,7 +49,8 @@ TEST_CASE("Unit Test - Storage") {
         REQUIRE(testStorage.getFirstAvailableBlockId() == 1); // get the next block 1?
     }
 
-    SECTION("Retrieve Record") {
+    SECTION("Retrieve Record")
+    {
         Storage testStorage;
         Record testRecord("17/09/2023", 1234567890, 123, 0.500, 0.900, 0.450, 23, 45, 1);
 
@@ -54,13 +60,13 @@ TEST_CASE("Unit Test - Storage") {
         REQUIRE(retrievedRecord == testRecord);
     }
 
-    SECTION("Delete Record") {
+    SECTION("Delete Record")
+    {
         Storage testStorage;
         vector<Address> addList;
-        addList.push_back(Address(1,0));
+        addList.push_back(Address(1, 0));
 
         testStorage.deleteRecord(addList);
         REQUIRE(!testStorage.containsFilledBlock(1));
     }
-
 }

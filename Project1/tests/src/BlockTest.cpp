@@ -5,18 +5,22 @@
 #include "catch.hpp"
 #include "../../src/Storage/Block.h"
 
-TEST_CASE("Unit Test - Block"){
-    SECTION("Block Initialisation") {
+TEST_CASE("Unit Test - Block")
+{
+    SECTION("Block Initialisation")
+    {
         Block testBlock;
         REQUIRE(testBlock.getSize() == 0);
         REQUIRE(testBlock.getMaxCapacity() == 400);
     }
 
-    SECTION("Block Insertion") {
+    SECTION("Block Insertion")
+    {
         Block testBlock;
         Record testRecord("17/09/2023", 1234567890, 123, 0.500, 0.900, 0.450, 23, 45, 1);
 
-        for(int i=0;i<5;i++){
+        for (int i = 0; i < 5; i++)
+        {
             int offset = testBlock.addRecord(testRecord);
             REQUIRE(offset != -1);
         }
@@ -24,32 +28,38 @@ TEST_CASE("Unit Test - Block"){
         REQUIRE(testBlock.isFull());
     }
 
-    SECTION("Block Retrieval") {
+    SECTION("Block Retrieval")
+    {
         Block testBlock;
         Record testRecord("17/09/2023", 1234567890, 123, 0.500, 0.900, 0.450, 23, 45, 1);
 
-        for(int i=0;i<5;i++){
+        for (int i = 0; i < 5; i++)
+        {
             testBlock.addRecord(testRecord);
         }
 
-        for(int i=0;i<5;i++){
+        for (int i = 0; i < 5; i++)
+        {
             Record retrievedRecord = testBlock.getRecord(i);
             REQUIRE(retrievedRecord == testRecord);
         }
-
     }
 
-    SECTION("Block Overflow") {
+    SECTION("Block Overflow")
+    {
         Block testBlock;
         Record testRecord("17/09/2023", 1234567890, 123, 0.500, 0.900, 0.450, 23, 45, 1);
 
-        for(int i=0;i<10;i++){
+        for (int i = 0; i < 10; i++)
+        {
             // inserting within block capacity of 400B
-            if(i < 5){
+            if (i < 5)
+            {
                 int offset = testBlock.addRecord(testRecord);
                 REQUIRE(offset != -1);
             }
-            else{
+            else
+            {
                 int offset = testBlock.addRecord(testRecord);
                 REQUIRE(offset == -1);
             }

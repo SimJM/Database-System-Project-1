@@ -8,33 +8,40 @@
 
 using namespace std;
 
-class Storage {
+class Storage
+{
 public:
     Storage();
 
-    Address insertRecordIntoBlock(int blockPtr, const Record& rec);//kiv
-    Address writeRecordToStorage(const Record& rec);
+    Address insertRecordIntoBlock(int blockPtr, const Record &rec);
+    Address writeRecordToStorage(const Record &rec);
 
     int getFirstAvailableBlockId();
     int getCurrentNumOfRecords() const;
     int getNumOfFullBlocks() const;
+
     Block getBlock(int blockPtr) const;
-    Record getRecord(const Address& add) const;
-    int getDataBlockAccessCount(vector<Address*> addresses) const;
-    double getAverageOfFg3PctHome(vector<Address*> addresses) const;
+    Record getRecord(const Address &add) const;
+    void deleteRecord(vector<Address *> addList);
+
+    int getDataBlockAccessCount(vector<Address *> addresses) const;
+    long long timeTakenToRetrieveRecords(vector<Address *> addresses) const;
+    double getAverageOfFg3PctHome(vector<Address *> addresses) const;
+
     int runBruteForceSearchQuery(double FG_PCT_home) const;
     int runBruteForceRangeQuery(double FG_PCT_home_lower_val, double FG_PCT_home_upper_val) const;
-    void deleteRecord(vector<Address>& addList);
+    int runBruteForceRangeDelete(double FG_PCT_home_lower_val, double FG_PCT_home_upper_val) const;
+
     bool containsFilledBlock(int blockId) const;
-    void removeFilledBlock(int blockId);
-    void addAvailableBlock(int blockId);
+    int removeFilledBlock(int blockId);
+    int addAvailableBlock(int blockId);
 
 private:
+    const int DISK_CAPACITY = 500 * 1024 * 1024;
     vector<Block> blocks;
     vector<int> availableBlocks;
     vector<int> filledBlocks;
-    const int diskCapacity = 500*1024*1024;
     int currentNumOfRecords;
 };
 
-#endif //PROJECT1_STORAGE_H
+#endif // PROJECT1_STORAGE_H

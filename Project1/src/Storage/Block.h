@@ -8,14 +8,14 @@
 #include <vector>
 #include "Record.h"
 
-class Block {
+class Block
+{
 public:
     Block();
 
     Record getRecord(int offset) const;
     int getCurrentNumOfRecords() const;
-    int getMaxNumOfRecords() const;
-    int addRecord(const Record& record);
+    int addRecord(const Record &record);
     size_t getSize() const;
     size_t getMaxCapacity() const;
     bool isFull() const;
@@ -28,4 +28,4 @@ private:
     size_t maxCapacity; // Maximum block size in bytes
 };
 
-#endif //PROJECT1_BLOCK_H
+#endif // PROJECT1_BLOCK_H

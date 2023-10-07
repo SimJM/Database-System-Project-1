@@ -7,8 +7,8 @@
 
 #include <string>
 
-// Address of the record is set to contain blockID and offset in the block
-class Address {
+class Address
+{
 private:
     int blockID;
     int offset;
@@ -22,4 +22,4 @@ public:
     std::string toString() const;
 };
 
-#endif //ADDRESS_H
+#endif // ADDRESS_H
