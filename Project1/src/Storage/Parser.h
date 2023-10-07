@@ -9,12 +9,12 @@
 #include <vector>
 #include "Record.h"
 
-class Parser {
+class Parser
+{
 public:
     Parser();
 
-    std::vector<Record> parse(const std::string& filename);
-
+    std::vector<Record> parse(const std::string &filename);
 };
 
-#endif //PROJECT1_PARSER_H
+#endif // PROJECT1_PARSER_H

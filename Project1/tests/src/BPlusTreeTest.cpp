@@ -6,7 +6,8 @@
 #include "catch.hpp"
 #include "../../src/Indexing/BPlusTree.cpp"
 
-TEST_CASE("Unit Test 1 - BPlusTree") {
+TEST_CASE("Unit Test 1 - BPlusTree")
+{
     BPlusTree tree;
 
     tree.insert(10.5, nullptr);
@@ -29,19 +30,21 @@ TEST_CASE("Unit Test 1 - BPlusTree") {
     std::cout << "Number of Levels: " << tree.getNumberOfLevels() << std::endl;
     std::cout << "Number of Nodes: " << tree.getNumberOfNodes() << std::endl;
 
-
     float keyToSearch = 19.5;
     bool found = tree.search(keyToSearch);
-    if (found) {
+    if (found)
+    {
         std::cout << "Key " << keyToSearch << " found!" << std::endl;
         std::cout << "Index nodes accessed: " << tree.getIndexNodeAccessCount() << std::endl;
-    } else {
+    }
+    else
+    {
         std::cout << "Key " << keyToSearch << " not found." << std::endl;
     }
-
 }
 
-TEST_CASE("Unit Test 2 - BPlusTree") {
+TEST_CASE("Unit Test 2 - BPlusTree")
+{
     BPlusTree tree;
     std::string record1 = "Record for 20.0";
     std::string record2 = "Record for 15.0";
@@ -75,24 +78,24 @@ TEST_CASE("Unit Test 2 - BPlusTree") {
     tree.insert(12.0, &record14);
     tree.insert(12.0, &record15);
 
-
     tree.getRootValue();
     std::cout << "Number of Levels: " << tree.getNumberOfLevels() << std::endl;
     std::cout << "Number of Nodes: " << tree.getNumberOfNodes() << std::endl;
 
-
-    float keyToSearch = 19.5; //1st instance of key
+    float keyToSearch = 19.5; // 1st instance of key
     bool found = tree.search(keyToSearch);
-    if (found) {
+    if (found)
+    {
         std::cout << "Key " << keyToSearch << " found!" << std::endl;
         std::cout << "Index nodes accessed(To get 1st instance of key): " << tree.getIndexNodeAccessCount() << std::endl;
     }
-    else{
+    else
+    {
         std::cout << "Key " << keyToSearch << " not found." << std::endl;
     }
 
     int rangeindexNodesAccessed;
-    std::vector<void*> retrievedRecords;
+    std::vector<void *> retrievedRecords;
     auto start = std::chrono::high_resolution_clock::now();
     retrievedRecords = tree.retrieveRange(12.0, 20.0, rangeindexNodesAccessed);
     auto end = std::chrono::high_resolution_clock::now();
@@ -100,14 +103,16 @@ TEST_CASE("Unit Test 2 - BPlusTree") {
 
     std::cout << "Time taken by function: " << duration.count() << " seconds" << std::endl;
 
-    for(void* recordAddress : retrievedRecords) {
-        std::string* actualRecord = reinterpret_cast<std::string*>(recordAddress);
+    for (void *recordAddress : retrievedRecords)
+    {
+        std::string *actualRecord = reinterpret_cast<std::string *>(recordAddress);
         std::cout << "Retrieved Record: " << *actualRecord << std::endl;
     }
     std::cout << "Index nodes accessed: " << rangeindexNodesAccessed << std::endl;
 }
 
-TEST_CASE("Unit Test 3 - BPlusTree removing duplicate") {
+TEST_CASE("Unit Test 3 - BPlusTree removing duplicate")
+{
     BPlusTree tree;
     tree.insert(10.5, nullptr);
     tree.insert(5.0, nullptr);
@@ -128,19 +133,17 @@ TEST_CASE("Unit Test 3 - BPlusTree removing duplicate") {
     tree.insert(12.0, nullptr);
     tree.insert(12.0, nullptr);
 
-
     tree.getRootValue();
     std::cout << "Number of Levels: " << tree.getNumberOfLevels() << std::endl;
     std::cout << "Number of Nodes: " << tree.getNumberOfNodes() << std::endl;
 
-
     tree.remove(12.0);
 
-    std::cout<<"after removal" <<std::endl;
-
+    std::cout << "after removal" << std::endl;
 }
 
-TEST_CASE("Unit Test 4 - BPlusTree Larger Tree and multiple removal") {
+TEST_CASE("Unit Test 4 - BPlusTree Larger Tree and multiple removal")
+{
     BPlusTree tree;
 
     tree.insert(1.5, nullptr);
@@ -197,7 +200,6 @@ TEST_CASE("Unit Test 4 - BPlusTree Larger Tree and multiple removal") {
     tree.getRootValue();
     std::cout << "Number of Levels: " << tree.getNumberOfLevels() << std::endl;
     std::cout << "Number of Nodes: " << tree.getNumberOfNodes() << std::endl;
-
 
     tree.remove(1.5);
     tree.remove(2.3);
@@ -220,16 +222,15 @@ TEST_CASE("Unit Test 4 - BPlusTree Larger Tree and multiple removal") {
     tree.remove(31.3);
     tree.remove(32.5);
 
-
-    std::cout<<"after removal" <<std::endl;
+    std::cout << "after removal" << std::endl;
 
     tree.getRootValue();
     std::cout << "Number of Levels: " << tree.getNumberOfLevels() << std::endl;
     std::cout << "Number of Nodes: " << tree.getNumberOfNodes() << std::endl;
-
 }
 
-TEST_CASE("Unit Test 5 - BPlusTree removing range") {
+TEST_CASE("Unit Test 5 - BPlusTree removing range")
+{
     BPlusTree tree;
     tree.insert(5.0, nullptr);
     tree.insert(20.0, nullptr);
@@ -246,14 +247,15 @@ TEST_CASE("Unit Test 5 - BPlusTree removing range") {
     tree.insert(19.5, nullptr);
     tree.insert(28.0, nullptr);
     tree.getRootValue();
-    std::cout << "Number of Levels: " << tree.getNumberOfLevels() << std::endl;    std::cout << "Number of Nodes: " << tree.getNumberOfNodes() << std::endl;
+    std::cout << "Number of Levels: " << tree.getNumberOfLevels() << std::endl;
+    std::cout << "Number of Nodes: " << tree.getNumberOfNodes() << std::endl;
 
     tree.removeLessThanOrEqual(15);
-    std::cout<<"after removal" << std::endl;
-
+    std::cout << "after removal" << std::endl;
 }
 
-TEST_CASE("Unit Test 6 - BPlusTree removing range large") {
+TEST_CASE("Unit Test 6 - BPlusTree removing range large")
+{
     BPlusTree tree;
     tree.insert(1.5, nullptr);
     tree.insert(2.3, nullptr);
@@ -306,14 +308,15 @@ TEST_CASE("Unit Test 6 - BPlusTree removing range large") {
     tree.insert(61.3, nullptr);
     tree.insert(62.4, nullptr);
     tree.getRootValue();
-    std::cout << "Number of Levels: " << tree.getNumberOfLevels() << std::endl;    std::cout << "Number of Nodes: " << tree.getNumberOfNodes() << std::endl;
+    std::cout << "Number of Levels: " << tree.getNumberOfLevels() << std::endl;
+    std::cout << "Number of Nodes: " << tree.getNumberOfNodes() << std::endl;
 
     tree.removeLessThanOrEqual(15);
-    std::cout<<"after removal" <<std::endl;
-
+    std::cout << "after removal" << std::endl;
 }
 
-TEST_CASE("Unit Test 7 - BPlusTree removing duplicates 2") {
+TEST_CASE("Unit Test 7 - BPlusTree removing duplicates 2")
+{
     BPlusTree tree;
 
     tree.insert(5.0, nullptr);
@@ -353,9 +356,7 @@ TEST_CASE("Unit Test 7 - BPlusTree removing duplicates 2") {
     std::cout << "Number of Levels: " << tree.getNumberOfLevels() << std::endl;
     std::cout << "Number of Nodes: " << tree.getNumberOfNodes() << std::endl;
 
-
     tree.removeLessThanOrEqual(10.0);
 
-    std::cout<<"after removal" <<std::endl;
-
+    std::cout << "after removal" << std::endl;
 }

@@ -29,10 +29,22 @@
     <list default="true" id="864cc76d-9617-4272-b584-ff845899fdab" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project1/src/Indexing/BPlusTree.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Indexing/BPlusTree.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Address.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Address.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Address.h" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Address.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Block.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Block.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Block.h" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Block.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Parser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Parser.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Parser.h" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Parser.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Record.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Record.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Record.h" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Record.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Storage.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Storage.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Storage.h" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Storage.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project1/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project1/tests/src/BPlusTreeTest.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/tests/src/BPlusTreeTest.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project1/tests/src/BlockTest.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/tests/src/BlockTest.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project1/tests/src/ParserTest.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/tests/src/ParserTest.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project1/tests/src/RecordTest.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/tests/src/RecordTest.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project1/tests/src/StorageTest.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/tests/src/StorageTest.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,15 +107,11 @@
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;structure.view.defaults.are.configured&quot;: &quot;true&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RunManager" selected="CMake Application.Project1">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="BPlusTreeTest" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project1" TARGET_NAME="BPlusTreeTest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Project1" RUN_TARGET_NAME="BPlusTreeTest" TEST_MODE="SUITE_TEST">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -163,6 +171,11 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Catch.BlockTest" />
       <item itemvalue="Catch.BPlusTreeTest" />
@@ -177,9 +190,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Catch.Unit Test 1 - BPlusTree" />
-        <item itemvalue="Catch.Unit Test - Storage" />
         <item itemvalue="Catch.Unit Test - Block" />
+        <item itemvalue="Catch.Unit Test - Storage" />
+        <item itemvalue="Catch.Unit Test 1 - BPlusTree" />
         <item itemvalue="Catch.Unit Test - Record" />
         <item itemvalue="Catch.Unit Test - Parser" />
       </list>
@@ -199,7 +212,8 @@
       <workItem from="1695317942445" duration="1720000" />
       <workItem from="1696256428948" duration="1196000" />
       <workItem from="1696257639430" duration="9227000" />
-      <workItem from="1696658964864" duration="1591000" />
+      <workItem from="1696658964864" duration="3768000" />
+      <workItem from="1696663200640" duration="3430000" />
     </task>
     <servers />
   </component>
@@ -222,17 +236,6 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Project1/tests/src/StorageTest.cpp</url>
-          <line>7</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="../../../../Desktop/Code/SC3020/Database-System-Project-1/Project1/cmake-build-debug-coverage" NAME="Unit Test - Record Coverage Results" MODIFIED="1695319507167" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="gcov/llvm" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

@@ -9,12 +9,14 @@
 
 Parser::Parser() {}
 
-std::vector<Record> Parser::parse(const std::string& filename) {
+std::vector<Record> Parser::parse(const std::string &filename)
+{
     std::vector<Record> records;
 
     std::ifstream inputFile(filename);
 
-    if (!inputFile.is_open()) {
+    if (!inputFile.is_open())
+    {
         std::cerr << "Failed to open the input file: " << filename << std::endl;
         return records;
     }
@@ -24,7 +26,8 @@ std::vector<Record> Parser::parse(const std::string& filename) {
     std::getline(inputFile, header);
 
     std::string line;
-    while (std::getline(inputFile, line)) {
+    while (std::getline(inputFile, line))
+    {
         std::istringstream iss(line);
         std::string gameDate = "";
         long long teamId = 0;
