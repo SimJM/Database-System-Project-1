@@ -4,7 +4,7 @@
 
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
-#include "../../src/Indexing/BPlusTree.cpp"
+#include "../../src/Indexing/BPlusTree.h"
 
 TEST_CASE("Unit Test 1 - BPlusTree")
 {
@@ -95,9 +95,8 @@ TEST_CASE("Unit Test 2 - BPlusTree")
     }
 
     int rangeindexNodesAccessed;
-    std::vector<void *> retrievedRecords;
     auto start = std::chrono::high_resolution_clock::now();
-    retrievedRecords = tree.retrieveRange(12.0, 20.0, rangeindexNodesAccessed);
+    std::vector<Address*> retrievedRecords = tree.retrieveRange(12.0, 20.0, rangeindexNodesAccessed);
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> duration = end - start;
 
