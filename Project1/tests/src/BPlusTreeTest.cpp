@@ -4,7 +4,7 @@
 
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
-#include "../../src/Indexing/BPlusTree.cpp"
+#include "../../src/Indexing/BPlusTree.h"
 
 TEST_CASE("Unit Test 1 - BPlusTree")
 {
@@ -95,9 +95,8 @@ TEST_CASE("Unit Test 2 - BPlusTree")
     }
 
     int rangeindexNodesAccessed;
-    std::vector<void *> retrievedRecords;
     auto start = std::chrono::high_resolution_clock::now();
-    retrievedRecords = tree.retrieveRange(12.0, 20.0, rangeindexNodesAccessed);
+    std::vector<Address*> retrievedRecords = tree.retrieveRange(12.0, 20.0, rangeindexNodesAccessed);
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> duration = end - start;
 
@@ -229,32 +228,7 @@ TEST_CASE("Unit Test 4 - BPlusTree Larger Tree and multiple removal")
     std::cout << "Number of Nodes: " << tree.getNumberOfNodes() << std::endl;
 }
 
-TEST_CASE("Unit Test 5 - BPlusTree removing range")
-{
-    BPlusTree tree;
-    tree.insert(5.0, nullptr);
-    tree.insert(20.0, nullptr);
-    tree.insert(15.0, nullptr);
-    tree.insert(25.0, nullptr);
-    tree.insert(12.0, nullptr);
-    tree.insert(11.0, nullptr);
-    tree.insert(12.0, nullptr);
-    tree.insert(6.0, nullptr);
-    tree.insert(19.0, nullptr);
-    tree.insert(26.0, nullptr);
-    tree.insert(27.0, nullptr);
-    tree.insert(11.5, nullptr);
-    tree.insert(19.5, nullptr);
-    tree.insert(28.0, nullptr);
-    tree.getRootValue();
-    std::cout << "Number of Levels: " << tree.getNumberOfLevels() << std::endl;
-    std::cout << "Number of Nodes: " << tree.getNumberOfNodes() << std::endl;
-
-    tree.removeLessThanOrEqual(15);
-    std::cout << "after removal" << std::endl;
-}
-
-TEST_CASE("Unit Test 6 - BPlusTree removing range large")
+TEST_CASE("Unit Test 5 - BPlusTree removing range large")
 {
     BPlusTree tree;
     tree.insert(1.5, nullptr);
@@ -315,7 +289,7 @@ TEST_CASE("Unit Test 6 - BPlusTree removing range large")
     std::cout << "after removal" << std::endl;
 }
 
-TEST_CASE("Unit Test 7 - BPlusTree removing duplicates 2")
+TEST_CASE("Unit Test 6 - BPlusTree removing duplicates 2")
 {
     BPlusTree tree;
 

@@ -10,7 +10,7 @@ TEST_CASE("Unit Test - Record")
     SECTION("Record Size should be 80 bytes")
     {
         Record testRecord("17/09/2023", 1234567890, 123, 0.500, 0.900, 0.450, 23, 45, 1);
-        REQUIRE(testRecord.getSize() == 80);
+        REQUIRE(testRecord.getSize() == 56);
     }
 
     SECTION("Record toString")

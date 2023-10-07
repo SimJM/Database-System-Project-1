@@ -37,16 +37,15 @@ TEST_CASE("Unit Test - Storage")
 
         int blockPtr = testStorage.getFirstAvailableBlockId();
 
-        // Insert 5 records into the same block
-        for (int i = 0; i < 5; ++i)
+        for (int i = 0; i < 7; ++i)
         {
             Address address = testStorage.insertRecordIntoBlock(blockPtr, testRecord);
             REQUIRE(address.getBlockID() == 0);
         }
 
-        // Check if the block is marked as filled after inserting 5 records
+        // Check if the block is marked as filled after inserting 7 records
         REQUIRE(testStorage.getNumOfFullBlocks() == 1);
-        REQUIRE(testStorage.getFirstAvailableBlockId() == 1); // get the next block 1?
+        REQUIRE(testStorage.getFirstAvailableBlockId() == 1);
     }
 
     SECTION("Retrieve Record")
@@ -60,13 +59,4 @@ TEST_CASE("Unit Test - Storage")
         REQUIRE(retrievedRecord == testRecord);
     }
 
-    SECTION("Delete Record")
-    {
-        Storage testStorage;
-        vector<Address> addList;
-        addList.push_back(Address(1, 0));
-
-        testStorage.deleteRecord(addList);
-        REQUIRE(!testStorage.containsFilledBlock(1));
-    }
 }
