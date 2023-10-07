@@ -26,11 +26,11 @@ public:
 
     int getDataBlockAccessCount(vector<Address *> addresses) const;
     long long timeTakenToRetrieveRecords(vector<Address *> addresses) const;
-    double getAverageOfFg3PctHome(vector<Address *> addresses) const;
+    float getAverageOfFg3PctHome(vector<Address *> addresses) const;
 
-    int runBruteForceSearchQuery(double FG_PCT_home) const;
-    int runBruteForceRangeQuery(double FG_PCT_home_lower_val, double FG_PCT_home_upper_val) const;
-    int runBruteForceRangeDelete(double FG_PCT_home_lower_val, double FG_PCT_home_upper_val) const;
+    int runBruteForceSearchQuery(float FG_PCT_home) const;
+    int runBruteForceRangeQuery(float FG_PCT_home_lower_val, float FG_PCT_home_upper_val) const;
+    int runBruteForceRangeDelete(float FG_PCT_home_lower_val, float FG_PCT_home_upper_val) const;
 
     bool containsFilledBlock(int blockId) const;
     int removeFilledBlock(int blockId);

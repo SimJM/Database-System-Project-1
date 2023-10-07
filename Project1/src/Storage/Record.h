@@ -13,7 +13,6 @@ public:
     Record(std::string date, int team_id, int pts, float fg_pct, float ft_pct, float fg3_pct, int ast, int reb, bool home_team_wins);
 
     size_t getSize() const;
-    bool isRecordDeleted() const;
     void deleteRecord();
     float getFgPctHome() const;
     float getFg3PctHome() const;
@@ -28,7 +27,6 @@ public:
     int AST_home;              //  4 Bytes
     int REB_home;              //  4 Bytes
     bool HOME_TEAM_WINS;       //  1 Byte
-    bool isDeleted;            //  1 Byte
 
     bool operator==(const Record &other) const
     {

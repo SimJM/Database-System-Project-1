@@ -85,12 +85,6 @@ void Storage::deleteRecord(vector<Address *> addList)
         int offset = add->getOffset();
         Block block = getBlock(blockId);
         block.deleteRecordFromBlock(offset);
-
-        if (containsFilledBlock(blockId))
-        {
-            removeFilledBlock(blockId);
-            addAvailableBlock(blockId);
-        }
     }
     auto endTime = high_resolution_clock::now();
     long long duration = duration_cast<nanoseconds>(endTime - startTime).count();
@@ -125,23 +119,23 @@ long long Storage::timeTakenToRetrieveRecords(vector<Address *> addresses) const
     return duration;
 }
 
-double Storage::getAverageOfFg3PctHome(vector<Address *> addresses) const
+float Storage::getAverageOfFg3PctHome(vector<Address *> addresses) const
 {
-    double total;
+    float total;
     int len = addresses.size();
     for (int i = 0; i < len; i++)
     {
         Record r = getRecord(*addresses[i]);
-        double fg3PctHome = r.getFg3PctHome();
+        float fg3PctHome = r.getFg3PctHome();
         total = total + fg3PctHome;
     }
-    double average = total / len;
+    float average = total / len;
     return average;
 }
 
-int Storage::runBruteForceSearchQuery(double FG_PCT_home) const
+int Storage::runBruteForceSearchQuery(float FG_PCT_home) const
 {
-    double FG_PCT_home_value;
+    float FG_PCT_home_value;
     int countDataBlockAccess = 0;
     vector<Record> resultOfSearchQuery;
 
@@ -171,9 +165,9 @@ int Storage::runBruteForceSearchQuery(double FG_PCT_home) const
     return countDataBlockAccess;
 }
 
-int Storage::runBruteForceRangeQuery(double FG_PCT_home_lower_val, double FG_PCT_home_upper_val) const
+int Storage::runBruteForceRangeQuery(float FG_PCT_home_lower_val, float FG_PCT_home_upper_val) const
 {
-    double FG_PCT_home_value;
+    float FG_PCT_home_value;
     int countDataBlockAccess = 0;
     vector<Record> resultOfSearchQuery;
 
@@ -203,9 +197,9 @@ int Storage::runBruteForceRangeQuery(double FG_PCT_home_lower_val, double FG_PCT
     return countDataBlockAccess;
 }
 
-int Storage::runBruteForceRangeDelete(double FG_PCT_home_lower_val, double FG_PCT_home_upper_val) const
+int Storage::runBruteForceRangeDelete(float FG_PCT_home_lower_val, float FG_PCT_home_upper_val) const
 {
-    double FG_PCT_home_value;
+    float FG_PCT_home_value;
     int countDataBlockAccess = 0;
     vector<Record> resultOfSearchQuery;
 
@@ -217,7 +211,7 @@ int Storage::runBruteForceRangeDelete(double FG_PCT_home_lower_val, double FG_PC
         Block block = getBlock(blockPtr);
 
         int curNumOfRecordsInBlock = block.getCurrentNumOfRecords();
-        for (int i = 0; i < curNumOfRecordsInBlock; i++)
+        for (int i = curNumOfRecordsInBlock - 1; i >= 0; i--)
         {
             Record rec = block.getRecord(i);
             FG_PCT_home_value = rec.getFgPctHome();
