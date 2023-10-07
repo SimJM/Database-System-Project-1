@@ -4,11 +4,13 @@ project(Project1)
 set(CMAKE_CXX_STANDARD 17)
 
 # Add your main program executable
-add_executable(Project1 src/main.cpp
+add_executable(Project1 src/main.h
+        src/main.cpp
         src/Storage/Address.cpp
         src/Storage/Address.h
         src/Storage/Storage.h
         src/Storage/Storage.cpp
+        src/Indexing/BPlusTree.h
         src/Indexing/BPlusTree.cpp
         src/Storage/Record.cpp
         src/Storage/Record.h

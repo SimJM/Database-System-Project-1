@@ -8,24 +8,11 @@ Record::Record(std::string date, int team_id, int pts, float fg_pct, float ft_pc
                float fg3_pct, int ast, int reb, bool home_team_wins)
     : GAME_DATE_EST(date), TEAM_ID_home(team_id), PTS_home(pts),
       FG_PCT_home(fg_pct), FT_PCT_home(ft_pct), FG3_PCT_home(fg3_pct),
-      AST_home(ast), REB_home(reb), HOME_TEAM_WINS(home_team_wins)
-{
-    isDeleted = false;
-}
+      AST_home(ast), REB_home(reb), HOME_TEAM_WINS(home_team_wins) {}
 
 size_t Record::getSize() const
 {
     return sizeof(*this);
-}
-
-bool Record::isRecordDeleted() const
-{
-    return isDeleted;
-}
-
-void Record::deleteRecord()
-{
-    isDeleted = true;
 }
 
 float Record::getFgPctHome() const

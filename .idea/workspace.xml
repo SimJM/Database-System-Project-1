@@ -27,24 +27,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="864cc76d-9617-4272-b584-ff845899fdab" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Project1/src/Indexing/BPlusTree.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project1/src/main.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project1/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project1/src/Indexing/BPlusTree.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Indexing/BPlusTree.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Address.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Address.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Address.h" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Address.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Block.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Block.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Block.h" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Block.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Parser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Parser.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Parser.h" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Parser.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Record.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Record.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Record.h" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Record.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Storage.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Storage.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project1/src/Storage/Storage.h" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/Storage/Storage.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project1/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/src/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project1/tests/src/BPlusTreeTest.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/tests/src/BPlusTreeTest.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project1/tests/src/BlockTest.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/tests/src/BlockTest.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project1/tests/src/ParserTest.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/tests/src/ParserTest.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project1/tests/src/RecordTest.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/tests/src/RecordTest.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project1/tests/src/StorageTest.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Project1/tests/src/StorageTest.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -213,7 +205,9 @@
       <workItem from="1696256428948" duration="1196000" />
       <workItem from="1696257639430" duration="9227000" />
       <workItem from="1696658964864" duration="3768000" />
-      <workItem from="1696663200640" duration="3430000" />
+      <workItem from="1696663200640" duration="5025000" />
+      <workItem from="1696668248882" duration="3014000" />
+      <workItem from="1696671279953" duration="3754000" />
     </task>
     <servers />
   </component>
