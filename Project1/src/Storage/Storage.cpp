@@ -228,20 +228,3 @@ int Storage::runBruteForceRangeDelete(float FG_PCT_home_lower_val, float FG_PCT_
 
     return countDataBlockAccess;
 }
-
-bool Storage::containsFilledBlock(int blockId) const
-{
-    return find(filledBlocks.begin(), filledBlocks.end(), blockId) != filledBlocks.end();
-}
-
-int Storage::removeFilledBlock(int blockId)
-{
-    filledBlocks.erase(remove(filledBlocks.begin(), filledBlocks.end(), blockId), filledBlocks.end());
-    return 0;
-}
-
-int Storage::addAvailableBlock(int blockId)
-{
-    availableBlocks.push_back(blockId);
-    return 0;
-}

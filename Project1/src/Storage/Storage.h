@@ -32,10 +32,6 @@ public:
     int runBruteForceRangeQuery(float FG_PCT_home_lower_val, float FG_PCT_home_upper_val) const;
     int runBruteForceRangeDelete(float FG_PCT_home_lower_val, float FG_PCT_home_upper_val) const;
 
-    bool containsFilledBlock(int blockId) const;
-    int removeFilledBlock(int blockId);
-    int addAvailableBlock(int blockId);
-
 private:
     const int DISK_CAPACITY = 500 * 1024 * 1024;
     vector<Block> blocks;
